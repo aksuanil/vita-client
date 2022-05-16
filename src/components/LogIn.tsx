@@ -1,27 +1,29 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useState } from 'react'
 
-type Props = {}
+type Props = {
+    showPopup : boolean
+}
 
-export default function LogIn({ }: Props) {
+export default function LogIn({showPopup}: Props) {
     let [isOpen, setIsOpen] = useState(false)
     const [showpass, setShowPass] = useState(false)
 
+    useEffect (() => {
+        showPopup && openModal();
+    }, [showPopup])
+
     function closeModal() {
         setIsOpen(false)
+        showPopup = false;
     }
-
+    
     function openModal() {
         setIsOpen(true)
     }
     return (
         <>
-            <button onClick={openModal} className="relative group font-semibold ">
-                <span className='p-2 px-4 border-2 border-x-transparent border-t-transparent border-emerald-900 rounded-md '>Log In</span>
-                <span className="absolute left-0 -bottom-[7px] rounded-b-sm w-full h-[0.00001px] bg-emerald-700 -z-10 duration-500 group-hover:duration-500 group-hover:h-9"></span>
-            </button>
-
             <Transition appear show={isOpen} as={Fragment}>
                 <Dialog as="div" className="relative z-20" onClose={closeModal}>
                     <Transition.Child

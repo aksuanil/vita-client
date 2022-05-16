@@ -4,14 +4,13 @@ import logo from '../assets/img/logo.png'
 type Props = {}
 
 export default function SignUp({ }: Props) {
-  const [sidebar, setsidebar] = useState();
   return (
     <div className="h-full bg-gradient-to-tl from-green-400 to-green-800 w-full py-12 px-4">
       <div className="flex flex-col items-center justify-center">
-        <div className="flex justify-center items-center gap-6 text-2xl font-bold text-white">
-          <img className='w-14 h-14' src={logo} />
+        <a href='/' className="flex justify-center items-center gap-6 text-2xl font-bold text-white">
+          <img className='w-14 h-14' src={logo} alt=''/>
           <div>Vita</div>
-        </div>
+        </a>
         <div className="bg-white shadow rounded lg:w-3/5  md:w-1/2 w-full p-10 mt-10">
           <p className="text-2xl font-extrabold leading-6 text-gray-800">
             Sign up

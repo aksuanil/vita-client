@@ -7,13 +7,13 @@ export default function About({ }: Props) {
     return (
         <div className="2xl:container 2xl:mx-auto lg:py-16 lg:px-20 md:py-12 md:px-6 py-9 px-4">
             <div className="flex lg:flex-row flex-col lg:gap-8 sm:gap-10 gap-12">
-                <div className="w-full lg:w-6/12">
+                <div className="w-full lg:w-10/12 ">
                     <img className="lg:block hidden w-full" src={img2} alt="people discussing on board" />
                     <img className="lg:hidden sm:block hidden w-full" src={img2} alt="people discussing on board" />
                     <img className="sm:hidden block w-full" src={img2} alt="people discussing on board" />
                 </div>
-                <div className="w-full lg:w-8/12">
-                    <h2 className="w-full font-bold lg:text-4xl text-3xl lg:leading-10 leading-9">We are here to make great design accessible and delightfull for everyone</h2>
+                <div className="w-full lg:w-9/12">
+                    <h2 className="w-full font-bold lg:text-4xl text-3xl lg:leading-10 leading-9">We are here to make personal dietary plans available for everyone</h2>
                     <p className="font-normal text-base leading-6 text-gray-600 mt-6">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum.In the first place we have granted to God, and by this our present charter confirmed for us and our heirs forever that the English Church shall be free, and shall have her rights entire,</p>
                 </div>
             </div>
