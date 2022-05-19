@@ -1,38 +1,72 @@
 import React, { useState } from 'react'
 import logo from '../assets/img/logo.png'
+import SignUpPopup from '../components/SignUpPopup';
 
 type Props = {}
 
 export default function SignUp({ }: Props) {
+
+  const [response, setResponse] = useState(0);
+  const [showPopup, setPopup] = useState(false);
+
+  const togglePopup = () => {
+    setPopup(true);
+    setTimeout(() => {
+      setPopup(false)
+    }, 0);
+  };
+
+  function handleSubmit(event: any) {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    var object: any = {};
+    formData.forEach((value, key) => object[key] = value);
+    var formDataJson = JSON.stringify(object);
+
+    (async () => {
+      const rawResponse = await fetch('http://localhost:8080/api/auth/signup', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: formDataJson
+      });
+      const content = await rawResponse.json();
+      setResponse(rawResponse.status);
+      console.log(content);
+    })();
+
+  }
   return (
     <div className="h-full bg-gradient-to-tl from-green-400 to-green-800 w-full py-12 px-4">
       <div className="flex flex-col items-center justify-center">
         <a href='/' className="flex justify-center items-center gap-6 text-2xl font-bold text-white">
-          <img className='w-14 h-14' src={logo} alt=''/>
+          <img className='w-14 h-14' src={logo} alt='' />
           <div>Vita</div>
         </a>
-        <div className="bg-white shadow rounded lg:w-3/5  md:w-1/2 w-full p-10 mt-10">
+        <form id='signin' onSubmit={handleSubmit} className="bg-white shadow rounded lg:w-3/5  md:w-1/2 w-full p-10 mt-10">
           <p className="text-2xl font-extrabold leading-6 text-gray-800">
             Sign up
           </p>
           <div className='flex gap-4'>
             <div className='w-1/2'>
               <label className="text-sm font-medium leading-none text-gray-800">Name</label>
-              <input aria-label="enter email adress" role="input" type="email" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
+              <input name='name' className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
             </div>
             <div className='w-1/2'>
-              <label className="text-sm font-medium leading-none text-gray-800">Surname</label>
-              <input aria-label="enter email adress" role="input" type="email" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
+              <label className="text-sm font-medium leading-none text-gray-800">Lastname</label>
+              <input name='lastname' className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
             </div>
           </div>
           <div className='mt-4'>
-              <label className="text-sm font-medium leading-none text-gray-800">Email</label>
-              <input aria-label="enter email adress" role="input" type="email" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
-            </div>
+            <label className="text-sm font-medium leading-none text-gray-800">Email</label>
+            <input name='email' type="email" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
+          </div>
           <div className="mt-4">
             <label className="text-sm font-medium leading-none text-gray-800">Password</label>
             <div className="relative flex items-center justify-center">
-              <input aria-label="enter Password" role="input" type="password" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
+              <input name='password' aria-label="enter Password" type="password" className="bg-gray-200 border rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
               <div className="absolute right-0 mt-2 mr-3 cursor-pointer">
                 <svg width={16} height={16} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path
@@ -57,6 +91,7 @@ export default function SignUp({ }: Props) {
               </div>
             </div>
           </div>
+          {response !== 0 && <SignUpPopup showPopup={showPopup} />}
           <div className="w-full flex items-center justify-between py-5">
             <hr className="w-full bg-gray-400" />
             <p className="text-base font-medium leading-4 px-2.5 text-gray-400">OR</p>
@@ -90,11 +125,11 @@ export default function SignUp({ }: Props) {
             <p className="text-base font-medium ml-4 text-gray-700">Continue with Twitter</p>
           </button>
           <div className="mt-8">
-            <button role="button" aria-label="create my account" className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-indigo-700 border rounded hover:bg-indigo-600 py-4 w-full">
+            <button onClick={() => togglePopup()} aria-label="create my account" className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-indigo-700 border rounded hover:bg-indigo-600 py-4 w-full">
               Create my account
             </button>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );
