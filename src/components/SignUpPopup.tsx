@@ -2,20 +2,20 @@ import React, { useState, useEffect } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 
 type Props = {
-    showPopup : boolean
+    showPopup: boolean,
+    loaderState: boolean,
+    responseStatus: number,
+    responseContent: string
 }
 
-export default function SignUpPopup({showPopup}: Props) {
+export default function SignUpPopup({ showPopup, responseStatus, responseContent, loaderState }: Props) {
 
     let [isOpen, setIsOpen] = useState(false)
 
-    useEffect (() => {
+    useEffect(() => {
         showPopup && openModal();
     }, [showPopup])
 
-    const handleOnSubmit = () => {
-
-    };
     function openModal() {
         setIsOpen(true)
     }
@@ -47,20 +47,41 @@ export default function SignUpPopup({showPopup}: Props) {
                                 leaveFrom="opacity-100 scale-100"
                                 leaveTo="opacity-0 scale-95"
                             >
-                                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-zinc-800 p-6 text-left align-middle shadow-xl transition-all">
-                                    <Dialog.Title
-                                        className="text-xl font-medium my-2 text-emerald-400 text-center">
-                                        Your message has been sent !
-                                    </Dialog.Title>
-                                    <div className="block bg-gradient-to-r from-transparent via-emerald-300 to-transparent w-full bg-[length:80%_1px] bg-no-repeat bg-center pb-[6px]" />
+                                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-green-100 p-6 text-left align-middle shadow-2xl transition-all">
+                                    {loaderState ?
+                                        <div>LOADING</div>
+                                        :
+                                        responseStatus === 200 ?
+                                            <div>
+                                                <Dialog.Title
+                                                    className="text-xl font-medium my-2 text-emerald-400 text-center">
+                                                    Your message has been sent !
+                                                </Dialog.Title>
+                                                <div className="block bg-gradient-to-r from-transparent via-emerald-300 to-transparent w-full bg-[length:80%_1px] bg-no-repeat bg-center pb-[6px]" />
 
-                                    <div className="mt-2">
-                                        <p className="text-md text-gray-400 text-center my-6">
-                                            I will return your message at my earliest convenience.
-                                            <br />
-                                            Thank you!
-                                        </p>
-                                    </div>
+                                                <div className="mt-2">
+                                                    <p className="text-md text-gray-400 text-center my-6">
+                                                        I will return your message at my earliest convenience.
+                                                        <br />
+                                                        Thank you!
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            :
+                                            <div>
+                                                <Dialog.Title
+                                                    className="text-xl font-medium my-2 text-emerald-800 text-center">
+                                                    We have encountered an errror and cant process your request right now.
+                                                </Dialog.Title>
+                                                <div className="block bg-gradient-to-r from-transparent via-emerald-800 to-transparent w-full bg-[length:80%_1px] bg-no-repeat bg-center pb-[6px]" />
+
+                                                <div className="mt-2">
+                                                    <p className="text-md text-gray-600 text-center my-6">
+                                                        {responseContent}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                    }
                                     <div id='bar' className="bg-emerald-700 h-3 fixed bottom-0 left-0" style={{ width: "0%" }}></div>
                                     <div className="mt-4">
                                         <button

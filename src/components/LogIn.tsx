@@ -3,14 +3,14 @@ import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useState } from 'react'
 
 type Props = {
-    showPopup : boolean
+    showPopup: boolean
 }
 
-export default function LogIn({showPopup}: Props) {
+export default function LogIn({ showPopup }: Props) {
     let [isOpen, setIsOpen] = useState(false)
     const [showpass, setShowPass] = useState(false)
 
-    useEffect (() => {
+    useEffect(() => {
         showPopup && openModal();
     }, [showPopup])
 
@@ -18,9 +18,33 @@ export default function LogIn({showPopup}: Props) {
         setIsOpen(false)
         showPopup = false;
     }
-    
+
     function openModal() {
         setIsOpen(true)
+    }
+
+    function handleSubmit(event: any) {
+        event.preventDefault();
+        // togglePopup();
+        const formData = new FormData(event.target);
+        var object: any = {};
+        formData.forEach((value, key) => object[key] = value);
+        var formDataJson = JSON.stringify(object);
+
+        (async () => {
+            // setLoader(true);
+            fetch('http://localhost:8080/api/auth/signin', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: formDataJson
+            }).catch(error => {
+                // setLoader(false)
+                console.log(error);
+            });
+        })();
     }
     return (
         <>
@@ -50,7 +74,7 @@ export default function LogIn({showPopup}: Props) {
                                 leaveTo="opacity-0 scale-95"
                             >
                                 <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                                    <div className="lg:px-10 sm:px-6 px-2">
+                                    <form onSubmit={handleSubmit} className="lg:px-10 sm:px-6 px-2">
                                         <p tabIndex={0} className="focus:outline-none text-2xl font-extrabold leading-6 text-gray-800">
                                             Login to your account
                                         </p>
@@ -89,15 +113,15 @@ export default function LogIn({showPopup}: Props) {
                                                 {" "}
                                                 Email{" "}
                                             </label>
-                                            <input id="email" aria-labelledby="email" type="email" className="bg-gray-200 border rounded text-xs font-medium leading-none placeholder-gray-800 text-gray-800 py-3 w-full pl-3 mt-2" placeholder="e.g: john@gmail.com " />
+                                            <input name='email' id="email" aria-labelledby="email" type="email" className="bg-gray-200 border rounded text-xs font-medium leading-none placeholder-gray-800 text-gray-800 py-3 w-full pl-3 mt-2" placeholder="e.g: john@gmail.com " />
                                         </div>
                                         <div className="mt-6 w-full">
-                                            <label htmlFor="myInput" className="text-sm font-medium leading-none text-gray-800">
+                                            <label htmlFor="password" className="text-sm font-medium leading-none text-gray-800">
                                                 {" "}
                                                 Password{" "}
                                             </label>
                                             <div className="relative flex items-center justify-center">
-                                                <input id="myInput" type={showpass ? "text" : "password"} className="bg-gray-200 border rounded text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
+                                                <input name='password' id="password" type={showpass ? "text" : "password"} className="bg-gray-200 border rounded text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2" />
                                                 <div onClick={() => setShowPass(!showpass)} className="absolute right-0 mt-2 mr-3 cursor-pointer">
                                                     <div id="show">
                                                         <svg width={16} height={16} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -119,11 +143,11 @@ export default function LogIn({showPopup}: Props) {
                                             </div>
                                         </div>
                                         <div className="mt-8">
-                                            <button role="button" className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-indigo-700 border rounded hover:bg-indigo-600 py-4 w-full">
+                                            <button type='submit' role="button" className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-indigo-700 border rounded hover:bg-indigo-600 py-4 w-full">
                                                 Login to my account
                                             </button>
                                         </div>
-                                    </div>
+                                    </form>
                                 </Dialog.Panel>
                             </Transition.Child>
                         </div>
