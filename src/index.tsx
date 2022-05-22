@@ -3,15 +3,15 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-// var style = document.createElement("style");
-// style.innerHTML = `::-webkit-scrollbar {
-//   background-color: transparent;
-//   width: 7px;
-// }
-// ::-webkit-scrollbar-thumb {
-//   background: #57B759;
-// }`;
-// document.head.appendChild(style);
+var style = document.createElement("style");
+style.innerHTML = `::-webkit-scrollbar {
+  background-color: transparent;
+  width: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: #096637;
+}`;
+document.head.appendChild(style);
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

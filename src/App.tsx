@@ -37,17 +37,19 @@ function App() {
       <LoginContext.Provider value={isLogin}>
         <BrowserRouter>
           <Header />
-          <Routes>
-            <Route index element={<HomePage />} />
-            <Route path="signup" element={<SignUp />} />
-            <Route path="createlist" element={<MainForm />} />
-            <Route path="*" element={<NoPage />} />
-          </Routes>
+          <div className='overflow-auto absolute bottom-0 left-0 right-0 top-24'>
+            <Routes>
+              <Route index element={<HomePage />} />
+              <Route path="signup" element={<SignUp />} />
+              <Route path="createlist" element={<MainForm />} />
+              <Route path="*" element={<NoPage />} />
+            </Routes>
+            <Footer />
+          </div>
         </BrowserRouter>
-        <Footer />
-      </LoginContext.Provider>
+      </LoginContext.Provider >
 
-    </div>
+    </div >
   );
 }
 

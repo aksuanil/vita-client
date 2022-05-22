@@ -39,8 +39,8 @@ export default function Header({ }: Props) {
     return (
         <>
             <div className=" mx-auto z-40 sticky top-0 drop-shadow-xl ">
-                <nav className="w-full px-14 absolute bg-opacity-90 shadow-md shadow-gray-500 backdrop-blur-sm bg-[#09664a] ">
-                    <div className="hidden lg:flex w-full f-f-p justify-between items-center py-4 relative ">
+                <nav className="w-full px-14 absolute bg-opacity-90 shadow-md shadow-gray-500 backdrop-blur-sm bg-[#096637] ">
+                    <div className="hidden lg:flex w-full f-f-p justify-between items-center py-5 relative ">
                         <div className="flex w-2/5 items-center gap-6 text-2xl font-bold text-white">
                             <img className='w-14 h-14' src={logo} />
                             <div>Vita</div>
