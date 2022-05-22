@@ -8,11 +8,9 @@ import Faq from '../components/Faq'
 export default function HomePage() {
   return (
     <>
-    <Header/>
-    <Hero/>
-    <About/>
-    <Faq/>
-    <Footer/>
+      <Hero />
+      <About />
+      <Faq />
     </>
   )
 }

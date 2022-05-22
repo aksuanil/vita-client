@@ -10,6 +10,24 @@ type Props = {
 
 export default function SignUpPopup({ showPopup, responseStatus, responseContent, loaderState }: Props) {
 
+    function progressBar() {
+        let progress = -5;
+        let invervalSpeed = 25;
+        let incrementSpeed = 1;
+        let bar: any = document.getElementById("bar");
+        let progressInterval = setInterval(function () {
+            progress += incrementSpeed;
+            bar.style.width = progress + "%";
+            if (progress >= 100) {
+                clearInterval(progressInterval);
+                setTimeout(() => closeModal(), 400);
+                if (responseStatus === 200) {
+                    setTimeout(() => window.location.replace("http://localhost:3000"), 500);
+                };
+            }
+        }, invervalSpeed);
+    };
+
     let [isOpen, setIsOpen] = useState(false)
 
     useEffect(() => {
@@ -18,11 +36,16 @@ export default function SignUpPopup({ showPopup, responseStatus, responseContent
 
     function openModal() {
         setIsOpen(true)
+        setTimeout(() => progressBar(), 200)
     }
     function closeModal() {
         setIsOpen(false)
     }
-
+    function redirect() {
+        setTimeout(() => {
+            window.location.replace("http://www.w3schools.com");
+        })
+    }
     return (
         <div>
             <Transition appear show={isOpen}>
@@ -47,23 +70,22 @@ export default function SignUpPopup({ showPopup, responseStatus, responseContent
                                 leaveFrom="opacity-100 scale-100"
                                 leaveTo="opacity-0 scale-95"
                             >
-                                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-green-100 p-6 text-left align-middle shadow-2xl transition-all">
+                                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-2xl transition-all">
                                     {loaderState ?
                                         <div>LOADING</div>
                                         :
                                         responseStatus === 200 ?
                                             <div>
                                                 <Dialog.Title
-                                                    className="text-xl font-medium my-2 text-emerald-400 text-center">
-                                                    Your message has been sent !
+                                                    className="text-xl font-medium my-2 text-emerald-800 text-center">
+                                                    Account has been created !
                                                 </Dialog.Title>
-                                                <div className="block bg-gradient-to-r from-transparent via-emerald-300 to-transparent w-full bg-[length:80%_1px] bg-no-repeat bg-center pb-[6px]" />
-
+                                                <div className="block bg-gradient-to-r from-transparent via-emerald-700 to-transparent w-full bg-[length:80%_1px] bg-no-repeat bg-center pb-[6px]" />
                                                 <div className="mt-2">
-                                                    <p className="text-md text-gray-400 text-center my-6">
-                                                        I will return your message at my earliest convenience.
+                                                    <p className="text-md text-gray-500 text-center my-6">
+                                                        Your account has been created successfully.
                                                         <br />
-                                                        Thank you!
+                                                        You are being redirected to homepage.
                                                     </p>
                                                 </div>
                                             </div>
@@ -82,11 +104,11 @@ export default function SignUpPopup({ showPopup, responseStatus, responseContent
                                                 </div>
                                             </div>
                                     }
-                                    <div id='bar' className="bg-emerald-700 h-3 fixed bottom-0 left-0" style={{ width: "0%" }}></div>
+                                    <div id='bar' className="bg-green-600 h-3 fixed bottom-0 left-0" style={{ width: "0%" }}></div>
                                     <div className="mt-4">
                                         <button
                                             type="button"
-                                            className="absolute right-0 top-0 px-2 py-2 text-emerald-500 hover:text-emerald-800"
+                                            className="absolute right-0 top-0 px-2 py-2 text-green-500 hover:text-green-800"
                                             onClick={closeModal}
                                         >
                                             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">

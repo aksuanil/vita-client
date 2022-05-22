@@ -30,21 +30,30 @@ export default function LogIn({ showPopup }: Props) {
         var object: any = {};
         formData.forEach((value, key) => object[key] = value);
         var formDataJson = JSON.stringify(object);
-
         (async () => {
             // setLoader(true);
             fetch('http://localhost:8080/api/auth/signin', {
                 method: 'POST',
+                credentials: 'include',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: formDataJson
+            }).then(async function (data) {
+                const content = await data.json();
+                if (data.status === 200) {
+                    window.location.reload();
+                }
+                else {
+                    console.log('Failed to log in.')
+                }
             }).catch(error => {
                 // setLoader(false)
                 console.log(error);
             });
         })();
+
     }
     return (
         <>

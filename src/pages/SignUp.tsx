@@ -16,12 +16,10 @@ export default function SignUp({ }: Props) {
     setTimeout(() => {
       setPopup(false)
     }, 500);
-    setResponse(0);
   };
 
   function handleSubmit(event: any) {
     event.preventDefault();
-    togglePopup();
     const formData = new FormData(event.target);
     var object: any = {};
     formData.forEach((value, key) => object[key] = value);
@@ -31,6 +29,7 @@ export default function SignUp({ }: Props) {
       setLoader(true);
       fetch('http://localhost:8080/api/auth/signup', {
         method: 'POST',
+        credentials: 'include',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
@@ -42,6 +41,7 @@ export default function SignUp({ }: Props) {
         setResponseContent(content.message);
         setResponse(data.status);
         setLoader(false)
+        togglePopup();
       }).catch(
         function () {
           setLoader(false)
@@ -50,12 +50,14 @@ export default function SignUp({ }: Props) {
 
   }
   return (
-    <div className="min-h-screen bg-gradient-to-tl from-green-400 to-green-800">
-      <div className="pt-10 lg:pt-16">
-        <a href='/' className="flex justify-center items-center gap-6 text-2xl font-bold text-white">
-          <img className='w-16 h-16' src={logo} alt='' />
-          <div className='text-3xl'>Vita</div>
-        </a>
+    <div className="min-h-screen bg-gradient-to-b from-green-700 via-green-600 to-white">
+      <div className="pt-14 lg:pt-28">
+        {/* <div className="flex justify-center">
+          <a href='/' className='flex items-center gap-6 text-2xl font-bold text-white'>
+            <img className='w-16 h-16' src={logo} alt='' />
+            <div className='text-3xl'>Vita</div>
+          </a>
+        </div> */}
         <form id='signin' onSubmit={handleSubmit} className="bg-white shadow rounded lg:w-3/5 md:w-1/2 w-full p-10 mt-10 overflow-auto m-auto container">
           <div className='mx-auto w-2/3 md:w-1/2 mb-4'>
             <p className="text-2xl font-extrabold leading-6 text-gray-800 text-center">
