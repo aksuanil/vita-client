@@ -1,43 +1,39 @@
 import React from 'react'
+import { Popover, Transition } from '@headlessui/react'
+import { IoMdInformationCircle } from 'react-icons/io'
+import { Fragment } from 'react'
 
 type Props = {}
 
-export default function MainForm({}: Props) {
-  return (
-    <>
+export default function MainForm({ }: Props) {
+    return (
+        <>
             <div className="flex items-center justify-center" >
                 <div className="xl:w-10/12 w-full px-8 pt-14 lg:pt-28">
                     <div className="bg-gray-100 py-12 flex flex-wrap items-center justify-center">
                         <div className="w-52 h-16 relative md:mt-0 mt-4">
                             <img src="https://i.ibb.co/DwNs7zG/Steps.png" alt="step1" className="w-full h-full" />
                             <div className="absolute w-full flex flex-col px-6 items-center justify-center inset-0 m-0">
-                                <p className="w-full text-sm font-medium leading-4 text-white">Sign Up</p>
-                                <p className="w-full text-xs mt-1 leading-none text-white">description of step 1</p>
+                                <p className="w-full text-sm font-medium leading-4 text-white">Basic Information</p>
+                                <p className="w-full text-xs mt-1 leading-none text-white">Basic informations</p>
                             </div>
                         </div>
                         <div className="w-52 h-16 relative md:mt-0 mt-4">
                             <img src="https://i.ibb.co/wNZ4nzy/Steps2.png" alt="step2" className="w-full h-full" />
                             <div className="absolute w-full flex flex-col px-6 items-center justify-center inset-0 m-0">
-                                <p className="w-full text-sm font-medium leading-4 text-indigo-800">About you</p>
-                                <p className="w-full text-xs mt-1 leading-none text-indigo-800">Some info about you</p>
-                            </div>
-                        </div>
-                        <div className="w-52 h-16 relative md:mt-0 mt-4">
-                            <img src="https://i.ibb.co/c2k4Gbr/Steps3.png" alt="step3" className="w-full h-full" />
-                            <div className="absolute w-full flex flex-col px-6 items-center justify-center inset-0 m-0">
-                                <p className="w-full text-sm font-medium leading-4 text-gray-700">Onboarding</p>
-                                <p className="w-full text-xs mt-1 leading-none text-gray-500">Get accquainted</p>
+                                <p className="w-full text-sm font-medium leading-4 text-indigo-800">Food Preferences</p>
+                                <p className="w-full text-xs mt-1 leading-none text-indigo-800">Your specific food preferences</p>
                             </div>
                         </div>
                         <div className="w-52 h-16 relative lg:mt-0 mt-4">
                             <img src="https://i.ibb.co/XCdjrhm/Steps4.png" alt="step4" className="w-full h-full" />
                             <div className="absolute w-full flex flex-col px-6 items-center justify-center inset-0 m-0">
-                                <p className="w-full text-sm font-medium leading-4 text-gray-700">Getting Started</p>
+                                <p className="w-full text-sm font-medium leading-4 text-gray-700">Your Diet List</p>
                                 <p className="w-full text-xs mt-1 leading-none text-gray-500">Resources to begin</p>
                             </div>
                         </div>
                     </div>
-                    <div className="xl:px-24">
+                    <form className="xl:px-12">
                         <div className="px-5 py-4 bg-gray-100 rounded-lg flex items-center justify-between mt-7">
                             <div className="flex items-center">
                                 <div className="flex-shrink-0">
@@ -57,69 +53,113 @@ export default function MainForm({}: Props) {
                                 </svg>
                             </button>
                         </div>
-                        <div className="mt-16 lg:flex justify-between border-b border-gray-200 pb-16">
-                            <div className="w-80">
-                                <div className="flex items-center">
-                                    <h1 className="text-xl font-medium pr-2 leading-5 text-gray-800">Personal Information</h1>
-                                </div>
+                        <div className="mt-16 flex flex-col lg:flex-row border-b border-gray-200 pb-16 gap-12">
+                            <div>
+                                <h1 className="text-xl font-medium pr-2 leading-5 text-gray-800">Personal Information</h1>
                                 <p className="mt-4 text-sm leading-5 text-gray-600">Information about the section could go here and a brief description of how this might be used.</p>
                             </div>
-                            <div>
-                                <div className="md:flex items-center lg:ml-24 lg:mt-0 mt-4">
-                                    <div className="md:w-64">
-                                        <label className="text-sm leading-none text-gray-800" id="firstName" >First name</label>
-                                        <input type="name" tabIndex={0} className="w-full p-3 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-sm font-medium leading-none text-gray-800" aria-labelledby="firstName" placeholder="John" />
-                                    </div>
-                                    <div className="md:w-64 md:ml-12 md:mt-0 mt-4">
-                                        <label className="text-sm leading-none text-gray-800" id="lastName">Last name</label>
-                                        <input type="name" tabIndex={0} className="w-full p-3 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-sm font-medium leading-none text-gray-800" aria-labelledby="lastName" placeholder="Doe" />
+                            <div className='flex flex-col gap-12 text-lg'>
+                                <div className="flex flex-col md:flex-row gap-5 md:gap-12">
+                                    <div className="flex flex-col justify-end md:w-1/4">
+                                        <label className="leading-none text-gray-800" id="firstName" >Age</label>
+                                        <input type="number" tabIndex={0} className="w-full p-4 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-base font-medium leading-none text-gray-800" aria-labelledby="firstName" placeholder="Age" />
                                     </div>
                                 </div>
-                                <div className="md:flex items-center lg:ml-24 mt-8">
-                                    <div className="md:w-64">
-                                        <label className="text-sm leading-none text-gray-800" id="emailAddress">Email address</label>
-                                        <input type="email" tabIndex={0} className="w-full p-3 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-sm font-medium leading-none text-gray-800" aria-labelledby="emailAddress" placeholder="youremail@example.com" />
+                                <div className="flex flex-col md:flex-row gap-5 md:gap-12">
+                                    <div className="flex flex-col justify-end md:w-1/3">
+                                        <label className="leading-none text-gray-800" id="firstName" >Height</label>
+                                        <input type="number" tabIndex={0} className="w-full p-4 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-base font-medium leading-none text-gray-800" aria-labelledby="firstName" placeholder="Cm" />
                                     </div>
-                                    <div className="md:w-64 md:ml-12 md:mt-0 mt-4">
-                                        <label className="text-sm leading-none text-gray-800" id="phone" >Phone number</label>
-                                        <input type="name" tabIndex={0} className="w-full p-3 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-sm font-medium leading-none text-gray-800" aria-labelledby="phone" placeholder="123-1234567" />
+                                    <div className="flex flex-col justify-end md:w-1/3">
+                                        <label className="leading-none text-gray-800" id="lastName">Weight</label>
+                                        <input type="number" tabIndex={0} className="w-full p-4 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-base font-medium leading-none text-gray-800" aria-labelledby="lastName" placeholder="Kg" />
+                                    </div>
+                                    <div className="flex flex-col justify-end md:w-1/3">
+                                        <label className="leading-none text-gray-800" id="bmi">Body Mass Index</label>
+                                        <input type="number" readOnly tabIndex={0} className="w-full p-4 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-base font-medium leading-none text-gray-800" aria-labelledby="bmi" placeholder="" />
                                     </div>
                                 </div>
+                                <div className='flex flex-col md:flex-row gap-5 md:gap-12'>
+                                    <div className="flex flex-col justify-end md:w-1/3">
+                                        <div className="flex gap-2 align-bottom">
+                                            <label className="flex gap-4 text-gray-800" id="phone" >Desired Daily Calorie Intake </label>
+                                            <div className="">
+                                                <Popover className="">
+                                                    <Popover.Button className={"flex"}>
+                                                        <IoMdInformationCircle size={24} />
+                                                    </Popover.Button>
+                                                    <Popover.Panel className="absolute left-1/2 z-10 mt-3 w-screen max-w-sm -translate-x-1/2 transform px-4 sm:px-0 lg:max-w-xl">
+                                                        <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
+                                                            <div className="bg-gray-50 p-4">
+
+                                                                <span className="flex items-center">
+                                                                    <span className="text-sm font-medium text-gray-700">
+                                                                        Though it differs depending on age and activity level, adult males generally require 2,000-3000 calories per day to maintain weight while adult females need around 1,600-2,400 according to the U.S Department of Health. 8000 calories equals to 1 kilogram.
+                                                                    </span>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </Popover.Panel>
+                                                </Popover>
+                                            </div>
+                                        </div>
+                                        <input type="number" tabIndex={0} className="w-full p-4 mt-1  bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-base font-medium leading-none text-gray-800" aria-labelledby="desiredWeight" placeholder="Kcal" />
+                                    </div>
+                                    <div className="flex flex-col justify-end md:w-1/3">
+                                        <label className="leading-none text-gray-800 " id="phone" >Desired Weight</label>
+                                        <input type="number" tabIndex={0} className="w-full p-4 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-base font-medium leading-none text-gray-800" aria-labelledby="desiredWeight" placeholder="Kg" />
+                                    </div>
+                                    <div className="flex flex-col justify-end md:w-1/3">
+                                        <label className="leading-none text-gray-800" id="phone" >Approximate days until desired weight</label>
+                                        <input type="number" tabIndex={0} readOnly className="w-full p-4 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-base font-medium leading-none text-gray-800" aria-labelledby="approxDays" />
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
-                        <div className="mt-16 lg:flex justify-between border-b border-gray-200 pb-16 mb-4">
-                            <div className="w-80">
-                                <div className="flex items-center">
-                                    <h1 className="text-xl font-medium pr-2 leading-5 text-gray-800">Security</h1>
+                    </form>
+                    <div className="mt-16 lg:flex lg:flex-col items-center border-b border-gray-200 pb-16 mb-4 text-center">
+                        <div className="">
+                            <div className="text-xl font-medium pr-2 leading-5 text-gray-800 ">Nutrition Balance</div>
+                            <p className="mt-4 text-sm leading-5 text-gray-600">Determine your desired nutrition balance below. </p>
+                        </div>
+                        <div>
+                            <div className="md:flex items-center gap-32 mt-12">
+                                <div className="">
+                                    <label className="text-sm leading-none text-gray-800" id="password">Protein</label>
+                                    <input type="range" tabIndex={0} className="w-full p-3 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-sm font-medium leading-none text-gray-800" aria-labelledby="password" placeholder="Enter your password" />
                                 </div>
-                                <p className="mt-4 text-sm leading-5 text-gray-600">Information about the section could go here and a brief description of how this might be used.</p>
+                                <div className="">
+                                    <label className="text-sm leading-none text-gray-800" id="securityCode">Fat</label>
+                                    <input type="range" tabIndex={0} className="w-full p-3 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-sm font-medium leading-none text-gray-800" aria-labelledby="securityCode" placeholder="Enter your security code" />
+                                </div>
+                                <div className="">
+                                    <label className="text-sm leading-none text-gray-800" id="securityCode">Carbs</label>
+                                    <input type="range" tabIndex={0} className="w-full p-3 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-sm font-medium leading-none text-gray-800" aria-labelledby="securityCode" placeholder="Enter your security code" />
+                                </div>
                             </div>
-                            <div>
-                                <div className="md:flex items-center lg:ml-24 lg:mt-0 mt-4">
-                                    <div className="md:w-64">
-                                        <label className="text-sm leading-none text-gray-800" id="password">Password</label>
-                                        <input type="name" tabIndex={0} className="w-full p-3 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-sm font-medium leading-none text-gray-800" aria-labelledby="password" placeholder="Enter your password" />
-                                    </div>
-                                    <div className="md:w-64 md:ml-12 md:mt-0 mt-4">
-                                        <label className="text-sm leading-none text-gray-800" id="securityCode">Security Code</label>
-                                        <input type="name" tabIndex={0} className="w-full p-3 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-sm font-medium leading-none text-gray-800" aria-labelledby="securityCode" placeholder="Enter your security code" />
-                                    </div>
+                            <div className='flex justify-center gap-12 md:gap-48'>
+                                <div className="">
+                                    <label className="text-sm leading-none text-gray-800 whitespace-nowrap" id="securityCode">High on Fiber</label>
+                                    <input type="checkbox" tabIndex={0} className="w-full p-3 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-sm font-medium leading-none text-gray-800" aria-labelledby="securityCode" placeholder="Enter your security code" />
                                 </div>
-                                <div className="md:flex items-center lg:ml-24 mt-8">
-                                    <div className="md:w-64">
-                                        <label className="text-sm leading-none text-gray-800" id="recoverEmail">Recovery Email address</label>
-                                        <input type="name" tabIndex={0} className="w-full p-3 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-sm font-medium leading-none text-gray-800" aria-labelledby="recoveryEmail" placeholder="Your recovery email" />
-                                    </div>
-                                    <div className="md:w-64 md:ml-12 md:mt-0 mt-4">
-                                        <label className="text-sm leading-none text-gray-800" id="altPhone">Alternate phone number</label>
-                                        <input type="name" tabIndex={0} className="w-full p-3 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-sm font-medium leading-none text-gray-800" aria-labelledby="altPhone" placeholder="Your alternate phone number" />
-                                    </div>
+                                <div className="">
+                                    <label className="text-sm leading-none text-gray-800" id="securityCode">Vegetarian</label>
+                                    <input type="checkbox" tabIndex={0} className="w-full p-3 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-sm font-medium leading-none text-gray-800" aria-labelledby="securityCode" placeholder="Enter your security code" />
+                                </div>
+                                <div className="">
+                                    <label className="text-sm leading-none text-gray-800" id="securityCode">Gluten-Free</label>
+                                    <input type="checkbox" tabIndex={0} className="w-full p-3 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-sm font-medium leading-none text-gray-800" aria-labelledby="securityCode" placeholder="Enter your security code" />
+                                </div>
+                                <div className="">
+                                    <label className="text-sm leading-none text-gray-800" id="securityCode">Vegan</label>
+                                    <input type="checkbox" tabIndex={0} className="w-full p-3 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-sm font-medium leading-none text-gray-800" aria-labelledby="securityCode" placeholder="Enter your security code" />
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div >
         </>
-  )
+    )
 }

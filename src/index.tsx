@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 var style = document.createElement("style");
 style.innerHTML = `::-webkit-scrollbar {
   background-color: transparent;
-  width: 8px;
+  width: 7px;
 }
 ::-webkit-scrollbar-thumb {
   background: #096637;

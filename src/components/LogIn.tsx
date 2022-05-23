@@ -152,7 +152,7 @@ export default function LogIn({ showPopup }: Props) {
                                             </div>
                                         </div>
                                         <div className="mt-8">
-                                            <button type='submit' role="button" className="focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700 text-sm font-semibold leading-none text-white focus:outline-none bg-indigo-700 border rounded hover:bg-indigo-600 py-4 w-full">
+                                            <button type='submit' role="button" className="focus:ring-2 focus:ring-offset-2 focus:ring-themeGreenLight text-sm font-semibold leading-none text-white focus:outline-none bg-themeGreenDark border rounded hover:bg-themeGreen py-4 w-full">
                                                 Login to my account
                                             </button>
                                         </div>

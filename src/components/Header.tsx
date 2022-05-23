@@ -34,46 +34,68 @@ export default function Header({ }: Props) {
             console.log('Failed to log out.');
         }
     };
+    document.onscroll = function () { scrollFunction() };
 
-
+    function scrollFunction() {
+        console.log('scroll')
+        if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+            document.getElementById("header")!.style.height = "5rem";
+        } else {
+            document.getElementById("header")!.style.height = "7rem";
+        }
+    }
     return (
         <>
-            <div className=" mx-auto z-40 sticky top-0 drop-shadow-xl ">
+            <div className=" mx-auto z-40 sticky top-0">
                 <nav className="w-full px-14 absolute bg-opacity-90 shadow-md shadow-gray-500 backdrop-blur-sm bg-[#096637] ">
-                    <div className="hidden lg:flex w-full f-f-p justify-between items-center py-5 relative ">
-                        <div className="flex w-2/5 items-center gap-6 text-2xl font-bold text-white">
+                    <div id='header' className="hidden lg:h-28 transition-all duration-500 lg:flex w-full f-f-p justify-between items-center py-5 relative ">
+                        <NavLink to="/" className="flex w-2/6 xl:w-2/5 items-center gap-6 text-[34px] font-bold text-white font-Spectral">
                             <img className='w-14 h-14' src={logo} />
                             <div>Vita</div>
-                        </div>
-                        <div className="flex justify-evenly md:w-4/6 lg:w-4/6 xl:w-3/6">
-                            <ul className="flex justify-between w-full items-center font-semibold text-lg text-[#FFBA26] tracking-wide ">
-                                <li>
-                                    <NavLink to="/" className={({ isActive }) =>
-                                        "" + (isActive ? "border-b-[3px] border-[#f5b01dbe] pb-1" : "")
-                                    } >Home</NavLink>
-                                </li>
-                                <li>
-                                    <NavLink to="/createlist" className={({ isActive }) =>
-                                        (isActive ? "border-b-[3px] border-[#f5b01dbe] pb-1" : "")
-                                    } >Create List</NavLink>
-                                </li>
-                                <li className="border-b-4 border-transparent pb-1">
-                                    <a href="#">Blog</a>
-                                </li>
-                                <button className="flex border-b-4 border-transparent gap-2">
+                        </NavLink>
+                        <div className="flex justify-evenly md:w-4/6 lg:w-full xl:w-full 2xl:w-4/6 font-Spectral font-bold">
+                            <div className="flex justify-between w-full items-center text-themeGold tracking-widest text-sm xl:text-[22px]">
+                                <NavLink to="/" className={({ isActive }) =>
+                                    "" + (isActive ? " border-b-[3px] border-themeGoldLight pb-1" : "relative group pb-1")
+                                } >Home
+                                    <span className="absolute -bottom-1 left-1/2 w-0 h-[3px] duration-200 group-hover:duration-200 bg-themeGoldLight group-hover:w-1/2 group-hover:transition-all"></span>
+                                    <span className="absolute -bottom-1 right-1/2 w-0 h-[3px] duration-200 group-hover:duration-200 bg-themeGoldLight group-hover:w-1/2 group-hover:transition-all"></span>
+                                </NavLink>
+                                <NavLink to="/createlist" className={({ isActive }) =>
+                                    "" + (isActive ? " border-b-[3px] border-themeGoldLight pb-1" : "relative group pb-1")
+                                } ><div className='whitespace-nowrap'>Create List</div>
+                                    <span className="absolute -bottom-1 left-1/2 w-0 h-[3px] duration-200 group-hover:duration-200 bg-themeGoldLight group-hover:w-1/2 group-hover:transition-all"></span>
+                                    <span className="absolute -bottom-1 right-1/2 w-0 h-[3px] duration-200 group-hover:duration-200 bg-themeGoldLight group-hover:w-1/2 group-hover:transition-all"></span>
+                                </NavLink>
+                                <NavLink to="/blog" className={({ isActive }) =>
+                                    "" + (isActive ? " border-b-[3px] border-themeGoldLight pb-1" : "relative group pb-1")
+                                } >Blog
+                                    <span className="absolute -bottom-1 left-1/2 w-0 h-[3px] duration-200 group-hover:duration-200 bg-themeGoldLight group-hover:w-1/2 group-hover:transition-all"></span>
+                                    <span className="absolute -bottom-1 right-1/2 w-0 h-[3px] duration-200 group-hover:duration-200 bg-themeGoldLight group-hover:w-1/2 group-hover:transition-all"></span>
+                                </NavLink>
+                                <NavLink to="/pricing" className={({ isActive }) =>
+                                    "" + (isActive ? " border-b-[3px] border-themeGoldLight pb-1" : "relative group pb-1")
+                                } >Pricing
+                                    <span className="absolute -bottom-1 left-1/2 w-0 h-[3px] duration-200 group-hover:duration-200 bg-themeGoldLight group-hover:w-1/2 group-hover:transition-all"></span>
+                                    <span className="absolute -bottom-1 right-1/2 w-0 h-[3px] duration-200 group-hover:duration-200 bg-themeGoldLight group-hover:w-1/2 group-hover:transition-all"></span>
+                                </NavLink>
+                                <button className="flex border-b-4 border-transparent gap-2 items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
                                     </svg>
-                                    <div className='font-semibold'>EN</div>
+                                    <div className='font-semibold relative group'>EN
+                                        <span className="absolute -bottom-1 left-1/2 w-0 h-[3px] duration-200 group-hover:duration-200 bg-themeGoldLight group-hover:w-1/2 group-hover:transition-all"></span>
+                                        <span className="absolute -bottom-1 right-1/2 w-0 h-[3px] duration-200 group-hover:duration-200 bg-themeGoldLight group-hover:w-1/2 group-hover:transition-all"></span>
+                                    </div>
                                 </button>
-                            </ul>
+                            </div>
                             <div className='border-r-[3px] border-[#c5901ca2] h-12 lg:pl-8 lg:mr-8 xl:pl-16 xl:mr-16'></div>
-                            <ul className='flex mb-2 justify-end gap-8 items-center text-lg text-gray-200 whitespace-nowrap'>
+                            <ul className='flex mb-2 justify-end gap-8 items-center text-[24px] font-Spectral text-gray-200 whitespace-nowrap'>
                                 {!isLogin ?
                                     <>
                                         <button onClick={() => togglePopup()} className="relative group font-semibold ">
                                             <span className='p-2 px-4 hover:text-[#09664a]'>Log In</span>
-                                            <span className="absolute left-0 -bottom-[7px] rounded-b-md w-full h-1 bg-[#c58f1c] -z-10 duration-500 group-hover:duration-500 group-hover:h-9"></span>
+                                            <span className="absolute left-0 -bottom-[7px] rounded-b-md w-full h-1 bg-[#c58f1c] -z-10 duration-500 group-hover:duration-500 group-hover:h-11"></span>
                                         </button>
                                         <LogIn showPopup={showPopup} />
                                         <button className="relative group font-semibold ">
@@ -81,22 +103,24 @@ export default function Header({ }: Props) {
                                                 "" + (isActive ? "bg-[#c58f1c] pb-2 rounded-b-sm text-[#09664a]" : "")
                                             } >
                                                 <span className='p-2 px-4 hover:text-[#09664a]'>Join Now</span>
-                                                <span className="absolute left-0 -bottom-[7px] rounded-b-md w-full h-1 bg-[#c58f1c] -z-10 duration-500 group-hover:duration-500 group-hover:h-9"></span>
+                                                <span className="absolute left-0 -bottom-[7px] rounded-b-md w-full h-1 bg-[#c58f1c] -z-10 duration-500 group-hover:duration-500 group-hover:h-11"></span>
                                             </NavLink>
                                         </button>
                                     </>
                                     :
                                     <>
                                         <button className="relative group font-semibold ">
-                                            <a href="signup">
-                                                <span className='p-2 px-4 border-2 border-x-transparent border-t-transparent border-emerald-900 rounded-md '>Profile</span>
-                                                <span className="absolute left-0 -bottom-[7px] rounded-b-sm w-full h-[0.00001px] bg-green-700 -z-10 duration-500 group-hover:duration-500 group-hover:h-9"></span>
-                                            </a>
+                                            <NavLink to="/profile" className={({ isActive }) =>
+                                                "" + (isActive ? "bg-[#c58f1c] pb-2 rounded-b-sm text-[#09664a]" : "")
+                                            } >
+                                                <span className='p-2 px-4 hover:text-[#09664a]'>Profile</span>
+                                                <span className="absolute left-0 -bottom-[7px] rounded-b-md w-full h-1 bg-[#c58f1c] -z-10 duration-500 group-hover:duration-500 group-hover:h-11"></span>
+                                            </NavLink>
                                         </button>
                                         <button onClick={() => handleLogOut()} className="relative group font-semibold ">
                                             <div>
-                                                <span className='p-2 px-4 border-2 border-x-transparent border-t-transparent border-emerald-900 rounded-md '>Log out</span>
-                                                <span className="absolute left-0 -bottom-[7px] rounded-b-sm w-full h-[0.00001px] bg-green-700 -z-10 duration-500 group-hover:duration-500 group-hover:h-9"></span>
+                                                <span className='p-2 px-4 hover:text-[#09664a]'>Log out</span>
+                                                <span className="absolute left-0 -bottom-[7px] rounded-b-md w-full h-1 bg-[#c58f1c] -z-10 duration-500 group-hover:duration-500 group-hover:h-11"></span>
                                             </div>
                                         </button>
                                     </>
