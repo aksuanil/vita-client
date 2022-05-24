@@ -37,7 +37,6 @@ export default function Header({ }: Props) {
     document.onscroll = function () { scrollFunction() };
 
     function scrollFunction() {
-        console.log('scroll')
         if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
             document.getElementById("header")!.style.height = "5rem";
         } else {

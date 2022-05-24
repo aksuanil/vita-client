@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Popover, Transition } from '@headlessui/react'
 import { IoMdInformationCircle } from 'react-icons/io'
 import { Fragment } from 'react'
@@ -6,6 +6,100 @@ import { Fragment } from 'react'
 type Props = {}
 
 export default function MainForm({ }: Props) {
+    interface Inputs {
+        gender: string,
+        age: number,
+        height: number,
+        weight: number,
+        desiredCalorie: number,
+        desiredWeight: number
+        physicalActivity: number
+    }
+
+    interface BmiInputs {
+        height: number,
+        weight: number
+    }
+
+    interface DesiredWeightInputs {
+        desiredCalorie: number,
+        desiredWeight: number,
+        weight: number
+    }
+    const [inputs, setInputs] = useState<Inputs>({
+        gender: "",
+        age: 0,
+        height: 0,
+        weight: 0,
+        desiredCalorie: 0,
+        desiredWeight: 0,
+        physicalActivity: 0
+    });
+    const [bmiInputs, setBmiInputs] = useState<BmiInputs>({
+        height: 0,
+        weight: 0,
+    })
+    const [targetWeightInputs, setTargetWeightInputs] = useState<DesiredWeightInputs>({
+        desiredCalorie: 0,
+        desiredWeight: 0,
+        weight: 0
+    })
+
+    const [bmiResult, setBmiResult] = useState(0)
+    const [targetWeightResult, setTargetWeightResult] = useState(0)
+
+    const handleFirstSubmit = (event: any) => {
+        event.preventDefault();
+        // console.log(inputs)
+    };
+
+    const handleChange = (event: any) => {
+        const name = event.target.name;
+        const value = event.target.value;
+        if (name === 'height' || name === 'weight') {
+            setBmiInputs(bmiValues => ({ ...bmiValues, [name]: value }))
+        }
+        if (name === 'desiredCalorie' || name === 'desiredWeight' || name === 'weight') {
+            setTargetWeightInputs(targetValues => ({ ...targetValues, [name]: value }))
+        }
+        setInputs(values => ({ ...values, [name]: value }))
+        console.log(inputs)
+    }
+
+    const calcBmi = () => {
+        const heightMeterSquare = (bmiInputs.height / 100) * (bmiInputs.height / 100)
+        const result = bmiInputs.weight / heightMeterSquare
+        setBmiResult(result);
+    }
+
+    const calcDailyCalNeed = () => {
+        let bmrValue: number = 0;
+        let bmrMultiplier: number = 1.2;
+        if (inputs.gender === 'male') {
+            bmrValue = 66.47 + (13.75 * inputs.weight) + (5.003 * inputs.height) - (6.755 * inputs.age)
+        }
+        if (inputs.gender === 'female') {
+            bmrValue = 655.1 + (9.563 * inputs.weight) + (1.850 * inputs.height) - (4.676 * inputs.age)
+        }
+        return bmrValue * ((inputs.physicalActivity * 0.175) + bmrMultiplier);
+    }
+
+    const calcTargetWeightDays = () => {
+        const dailyCal = calcDailyCalNeed();
+        const weightGap = inputs.weight - inputs.desiredWeight;
+        const weightGapCalories = weightGap * 8000;
+        const targetDays = weightGapCalories / (dailyCal - targetWeightInputs.desiredCalorie);
+        setTargetWeightResult(targetDays);
+    }
+
+    useEffect(() => {
+        calcTargetWeightDays();
+    }, [inputs])
+
+    useEffect(() => {
+        calcBmi();
+    }, [bmiInputs])
+
     return (
         <>
             <div className="flex items-center justify-center" >
@@ -33,7 +127,7 @@ export default function MainForm({ }: Props) {
                             </div>
                         </div>
                     </div>
-                    <form className="xl:px-12">
+                    <form onSubmit={handleFirstSubmit} className="xl:px-12">
                         <div className="px-5 py-4 bg-gray-100 rounded-lg flex items-center justify-between mt-7">
                             <div className="flex items-center">
                                 <div className="flex-shrink-0">
@@ -44,7 +138,6 @@ export default function MainForm({ }: Props) {
                                         />
                                     </svg>
                                 </div>
-
                                 <p className="text-sm text-gray-800 pl-3">We take privacy issues seriously. You can be sure that your personal data is securely protected.</p>
                             </div>
                             <button className="md:block hidden focus:outline-none focus:ring-2 focus:ring-gray-700 rounded">
@@ -60,23 +153,42 @@ export default function MainForm({ }: Props) {
                             </div>
                             <div className='flex flex-col gap-12 text-lg'>
                                 <div className="flex flex-col md:flex-row gap-5 md:gap-12">
-                                    <div className="flex flex-col justify-end md:w-1/4">
+                                    <div className="flex flex-col justify-end md:w-1/3">
                                         <label className="leading-none text-gray-800" id="firstName" >Age</label>
-                                        <input type="number" tabIndex={0} className="w-full p-4 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-base font-medium leading-none text-gray-800" aria-labelledby="firstName" placeholder="Age" />
+                                        <input required name='age' type="number" value={inputs.age || ''} onChange={handleChange} className="w-full p-4 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-base font-medium leading-none text-gray-800" aria-labelledby="firstName" placeholder="Age" />
+                                    </div>
+                                    <div className="flex flex-col justify-end md:w-1/3">
+                                        <label className="leading-none text-gray-800" id="firstName" >Gender</label>
+                                        <select name="gender" onChange={handleChange} className='w-full p-4 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-base font-medium leading-none text-gray-800' required>
+                                            <option value="">Gender</option>
+                                            <option value="male">Male</option>
+                                            <option value="female">Female</option>
+                                        </select>
+                                    </div>
+                                    <div className="flex flex-col justify-end md:w-1/3">
+                                        <label className="leading-none text-gray-800" id="firstName" >Physical Activity Level</label>
+                                        <select name="physicalActivity" onChange={handleChange} className='w-full p-4 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-base font-medium leading-none text-gray-800' required>
+                                            <option value="">Please Select</option>
+                                            <option value={0}>Sedentary - 1</option>
+                                            <option value={1}>Lightly Active - 2</option>
+                                            <option value={2}>Moderately Active - 3</option>
+                                            <option value={3}>Active - 4</option>
+                                            <option value={4}>Very Active - 5</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div className="flex flex-col md:flex-row gap-5 md:gap-12">
                                     <div className="flex flex-col justify-end md:w-1/3">
-                                        <label className="leading-none text-gray-800" id="firstName" >Height</label>
-                                        <input type="number" tabIndex={0} className="w-full p-4 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-base font-medium leading-none text-gray-800" aria-labelledby="firstName" placeholder="Cm" />
+                                        <label className="leading-none text-gray-800" id="height" >Height</label>
+                                        <input required name='height' maxLength={3} type="number" value={inputs.height || ''} onChange={handleChange} className="w-full p-4 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-base font-medium leading-none text-gray-800" aria-labelledby="firstName" placeholder="Cm" min="1" max="250" />
                                     </div>
                                     <div className="flex flex-col justify-end md:w-1/3">
-                                        <label className="leading-none text-gray-800" id="lastName">Weight</label>
-                                        <input type="number" tabIndex={0} className="w-full p-4 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-base font-medium leading-none text-gray-800" aria-labelledby="lastName" placeholder="Kg" />
+                                        <label className="leading-none text-gray-800" id="weight">Weight</label>
+                                        <input required name='weight' type="number" value={inputs.weight || ''} onChange={handleChange} className="w-full p-4 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-base font-medium leading-none text-gray-800" aria-labelledby="lastName" placeholder="Kg" />
                                     </div>
                                     <div className="flex flex-col justify-end md:w-1/3">
                                         <label className="leading-none text-gray-800" id="bmi">Body Mass Index</label>
-                                        <input type="number" readOnly tabIndex={0} className="w-full p-4 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-base font-medium leading-none text-gray-800" aria-labelledby="bmi" placeholder="" />
+                                        <input type="number" value={bmiResult} readOnly className="w-full p-4 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-base font-medium leading-none text-gray-800" aria-labelledby="bmi" placeholder="" />
                                     </div>
                                 </div>
                                 <div className='flex flex-col md:flex-row gap-5 md:gap-12'>
@@ -103,20 +215,21 @@ export default function MainForm({ }: Props) {
                                                 </Popover>
                                             </div>
                                         </div>
-                                        <input type="number" tabIndex={0} className="w-full p-4 mt-1  bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-base font-medium leading-none text-gray-800" aria-labelledby="desiredWeight" placeholder="Kcal" />
+                                        <input required name='desiredCalorie' type="number" value={inputs.desiredCalorie || ''} onChange={handleChange} className="w-full p-4 mt-1  bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-base font-medium leading-none text-gray-800" aria-labelledby="desiredWeight" placeholder="Kcal" />
                                     </div>
                                     <div className="flex flex-col justify-end md:w-1/3">
                                         <label className="leading-none text-gray-800 " id="phone" >Desired Weight</label>
-                                        <input type="number" tabIndex={0} className="w-full p-4 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-base font-medium leading-none text-gray-800" aria-labelledby="desiredWeight" placeholder="Kg" />
+                                        <input required name='desiredWeight' type="number" value={inputs.desiredWeight || ''} onChange={handleChange} className="w-full p-4 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-base font-medium leading-none text-gray-800" aria-labelledby="desiredWeight" placeholder="Kg" />
                                     </div>
                                     <div className="flex flex-col justify-end md:w-1/3">
                                         <label className="leading-none text-gray-800" id="phone" >Approximate days until desired weight</label>
-                                        <input type="number" tabIndex={0} readOnly className="w-full p-4 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-base font-medium leading-none text-gray-800" aria-labelledby="approxDays" />
+                                        <input type="number" value={targetWeightResult} readOnly className="w-full p-4 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-base font-medium leading-none text-gray-800" aria-labelledby="approxDays" />
                                     </div>
                                 </div>
 
                             </div>
                         </div>
+                        <button type='submit'>Next</button>
                     </form>
                     <div className="mt-16 lg:flex lg:flex-col items-center border-b border-gray-200 pb-16 mb-4 text-center">
                         <div className="">
