@@ -1,31 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { Popover, Transition } from '@headlessui/react'
+import { Popover } from '@headlessui/react'
 import { IoMdInformationCircle } from 'react-icons/io'
-import { Fragment } from 'react'
+import { calcBmi, calcDailyCalNeed, calcTargetWeightDays } from './MainFormHelper'
+import type { Inputs, BmiInputs, DesiredWeightInputs } from './MainFormHelper'
 
 type Props = {}
 
 export default function MainForm({ }: Props) {
-    interface Inputs {
-        gender: string,
-        age: number,
-        height: number,
-        weight: number,
-        desiredCalorie: number,
-        desiredWeight: number
-        physicalActivity: number
-    }
 
-    interface BmiInputs {
-        height: number,
-        weight: number
-    }
-
-    interface DesiredWeightInputs {
-        desiredCalorie: number,
-        desiredWeight: number,
-        weight: number
-    }
     const [inputs, setInputs] = useState<Inputs>({
         gender: "",
         age: 0,
@@ -44,13 +26,19 @@ export default function MainForm({ }: Props) {
         desiredWeight: 0,
         weight: 0
     })
-
     const [bmiResult, setBmiResult] = useState(0)
     const [targetWeightResult, setTargetWeightResult] = useState(0)
 
+    useEffect(() => {
+        setTargetWeightResult(calcTargetWeightDays(inputs, targetWeightInputs, calcDailyCalNeed(inputs)));
+    }, [inputs])
+
+    useEffect(() => {
+        setBmiResult(calcBmi(bmiInputs));
+    }, [bmiInputs])
+    
     const handleFirstSubmit = (event: any) => {
         event.preventDefault();
-        // console.log(inputs)
     };
 
     const handleChange = (event: any) => {
@@ -63,43 +51,7 @@ export default function MainForm({ }: Props) {
             setTargetWeightInputs(targetValues => ({ ...targetValues, [name]: value }))
         }
         setInputs(values => ({ ...values, [name]: value }))
-        console.log(inputs)
     }
-
-    const calcBmi = () => {
-        const heightMeterSquare = (bmiInputs.height / 100) * (bmiInputs.height / 100)
-        const result = bmiInputs.weight / heightMeterSquare
-        setBmiResult(result);
-    }
-
-    const calcDailyCalNeed = () => {
-        let bmrValue: number = 0;
-        let bmrMultiplier: number = 1.2;
-        if (inputs.gender === 'male') {
-            bmrValue = 66.47 + (13.75 * inputs.weight) + (5.003 * inputs.height) - (6.755 * inputs.age)
-        }
-        if (inputs.gender === 'female') {
-            bmrValue = 655.1 + (9.563 * inputs.weight) + (1.850 * inputs.height) - (4.676 * inputs.age)
-        }
-        return bmrValue * ((inputs.physicalActivity * 0.175) + bmrMultiplier);
-    }
-
-    const calcTargetWeightDays = () => {
-        const dailyCal = calcDailyCalNeed();
-        const weightGap = inputs.weight - inputs.desiredWeight;
-        const weightGapCalories = weightGap * 8000;
-        const targetDays = weightGapCalories / (dailyCal - targetWeightInputs.desiredCalorie);
-        setTargetWeightResult(targetDays);
-    }
-
-    useEffect(() => {
-        calcTargetWeightDays();
-    }, [inputs])
-
-    useEffect(() => {
-        calcBmi();
-    }, [bmiInputs])
-
     return (
         <>
             <div className="flex items-center justify-center" >
@@ -188,7 +140,7 @@ export default function MainForm({ }: Props) {
                                     </div>
                                     <div className="flex flex-col justify-end md:w-1/3">
                                         <label className="leading-none text-gray-800" id="bmi">Body Mass Index</label>
-                                        <input type="number" value={bmiResult} readOnly className="w-full p-4 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-base font-medium leading-none text-gray-800" aria-labelledby="bmi" placeholder="" />
+                                        <input type="number" value={bmiResult || ''} readOnly className="w-full p-4 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-base font-medium leading-none text-gray-800" aria-labelledby="bmi" placeholder="" />
                                     </div>
                                 </div>
                                 <div className='flex flex-col md:flex-row gap-5 md:gap-12'>
@@ -223,7 +175,7 @@ export default function MainForm({ }: Props) {
                                     </div>
                                     <div className="flex flex-col justify-end md:w-1/3">
                                         <label className="leading-none text-gray-800" id="phone" >Approximate days until desired weight</label>
-                                        <input type="number" value={targetWeightResult} readOnly className="w-full p-4 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-base font-medium leading-none text-gray-800" aria-labelledby="approxDays" />
+                                        <input type="number" value={targetWeightResult || ''} readOnly className="w-full p-4 mt-3 bg-gray-100 border rounded border-gray-200 focus:outline-none focus:border-gray-600 text-base font-medium leading-none text-gray-800" aria-labelledby="approxDays" />
                                     </div>
                                 </div>
 

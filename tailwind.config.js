@@ -21,5 +21,5 @@ module.exports = {
       'Spectral': ['Spectral', 'sans-serif'],
     },
   },
-  plugins: [],
+  plugins: [require('tailwindcss-debug-screens')],
 }

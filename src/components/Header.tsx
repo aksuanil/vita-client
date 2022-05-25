@@ -3,13 +3,25 @@ import { NavLink } from 'react-router-dom';
 import { LoginContext } from '../App';
 import logo from '../assets/img/logo.png'
 import LogIn from './LogIn';
+import { useAuth } from '../context/AuthContext';
+import { useEffect } from 'react';
 
-type Props = {}
+type Props = {
+    isUserLogin: Promise<boolean>
+}
 
-export default function Header({ }: Props) {
+export default function Header({ isUserLogin }: Props) {
+    const { logout } = useAuth();
+    const [IsLogin, setIsLogin] = useState(false);
+
+    useEffect(() => {
+        isUserLogin.then((res) => {
+            setIsLogin(res);
+        })
+    })
+
     const [show, setShow] = useState(false);
     const [showPopup, setPopup] = useState(false);
-    const isLogin = React.useContext(LoginContext);
 
     const togglePopup = () => {
         setPopup(true);
@@ -18,42 +30,26 @@ export default function Header({ }: Props) {
         }, 200);
     };
 
-    const handleLogOut = async () => {
-        const response = await fetch('http://localhost:8080/api/auth/signout', {
-            method: 'POST',
-            credentials: 'include',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-        });
-        if (response.status === 200) {
-            window.location.reload();
-        }
-        else {
-            console.log('Failed to log out.');
-        }
-    };
     document.onscroll = function () { scrollFunction() };
 
     function scrollFunction() {
         if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
-            document.getElementById("header")!.style.height = "5rem";
+            document.getElementById("header")!.style.height = "4.5rem";
         } else {
-            document.getElementById("header")!.style.height = "7rem";
+            document.getElementById("header")!.style.height = "5.5rem";
         }
     }
     return (
         <>
             <div className=" mx-auto z-40 sticky top-0">
                 <nav className="w-full px-14 absolute bg-opacity-90 shadow-md shadow-gray-500 backdrop-blur-sm bg-[#096637] ">
-                    <div id='header' className="hidden lg:h-28 transition-all duration-500 lg:flex w-full f-f-p justify-between items-center py-5 relative ">
-                        <NavLink to="/" className="flex w-2/6 xl:w-2/5 items-center gap-6 text-[34px] font-bold text-white font-Spectral">
-                            <img className='w-14 h-14' src={logo} />
+                    <div id='header' className="hidden lg:h-[5.5rem] transition-all duration-500 lg:flex w-full justify-between items-center py-5 relative ">
+                        <NavLink to="/" className="flex w-2/6 xl:w-2/5 items-center gap-6 text-[32px] font-bold text-white font-Spectral">
+                            <img className='w-12 h-12' src={logo} />
                             <div>Vita</div>
                         </NavLink>
                         <div className="flex justify-evenly md:w-4/6 lg:w-full xl:w-full 2xl:w-4/6 font-Spectral font-bold">
-                            <div className="flex justify-between w-full items-center text-themeGold tracking-widest text-sm xl:text-[22px]">
+                            <div className="flex justify-between w-full items-center text-themeGold tracking-widest text-sm xl:text-[17px]">
                                 <NavLink to="/" className={({ isActive }) =>
                                     "" + (isActive ? " border-b-[3px] border-themeGoldLight pb-1" : "relative group pb-1")
                                 } >Home
@@ -89,8 +85,8 @@ export default function Header({ }: Props) {
                                 </button>
                             </div>
                             <div className='border-r-[3px] border-[#c5901ca2] h-12 lg:pl-8 lg:mr-8 xl:pl-16 xl:mr-16'></div>
-                            <ul className='flex mb-2 justify-end gap-8 items-center text-[24px] font-Spectral text-gray-200 whitespace-nowrap'>
-                                {!isLogin ?
+                            <ul className='flex mb-2 justify-end gap-8 items-center text-[21px] font-Spectral text-gray-200 whitespace-nowrap'>
+                                {!IsLogin ?
                                     <>
                                         <button onClick={() => togglePopup()} className="relative group font-semibold ">
                                             <span className='p-2 px-4 hover:text-[#09664a]'>Log In</span>
@@ -116,7 +112,7 @@ export default function Header({ }: Props) {
                                                 <span className="absolute left-0 -bottom-[7px] rounded-b-md w-full h-1 bg-[#c58f1c] -z-10 duration-500 group-hover:duration-500 group-hover:h-11"></span>
                                             </NavLink>
                                         </button>
-                                        <button onClick={() => handleLogOut()} className="relative group font-semibold ">
+                                        <button onClick={() => logout()} className="relative group font-semibold ">
                                             <div>
                                                 <span className='p-2 px-4 hover:text-[#09664a]'>Log out</span>
                                                 <span className="absolute left-0 -bottom-[7px] rounded-b-md w-full h-1 bg-[#c58f1c] -z-10 duration-500 group-hover:duration-500 group-hover:h-11"></span>

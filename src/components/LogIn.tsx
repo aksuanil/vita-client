@@ -1,12 +1,15 @@
 import React, { useEffect } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useState } from 'react'
+import { useAuth } from '../context/AuthContext';
 
 type Props = {
     showPopup: boolean
 }
 
 export default function LogIn({ showPopup }: Props) {
+    const { loginSubmit, logout, checkLoginStatus } = useAuth();
+
     let [isOpen, setIsOpen] = useState(false)
     const [showpass, setShowPass] = useState(false)
 
@@ -21,39 +24,6 @@ export default function LogIn({ showPopup }: Props) {
 
     function openModal() {
         setIsOpen(true)
-    }
-
-    function handleSubmit(event: any) {
-        event.preventDefault();
-        // togglePopup();
-        const formData = new FormData(event.target);
-        var object: any = {};
-        formData.forEach((value, key) => object[key] = value);
-        var formDataJson = JSON.stringify(object);
-        (async () => {
-            // setLoader(true);
-            fetch('http://localhost:8080/api/auth/signin', {
-                method: 'POST',
-                credentials: 'include',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: formDataJson
-            }).then(async function (data) {
-                const content = await data.json();
-                if (data.status === 200) {
-                    window.location.reload();
-                }
-                else {
-                    console.log('Failed to log in.')
-                }
-            }).catch(error => {
-                // setLoader(false)
-                console.log(error);
-            });
-        })();
-
     }
     return (
         <>
@@ -83,7 +53,7 @@ export default function LogIn({ showPopup }: Props) {
                                 leaveTo="opacity-0 scale-95"
                             >
                                 <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                                    <form onSubmit={handleSubmit} className="lg:px-10 sm:px-6 px-2">
+                                    <form onSubmit={loginSubmit} className="lg:px-10 sm:px-6 px-2">
                                         <p tabIndex={0} className="focus:outline-none text-2xl font-extrabold leading-6 text-gray-800">
                                             Login to your account
                                         </p>

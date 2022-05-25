@@ -41,11 +41,7 @@ export default function SignUpPopup({ showPopup, responseStatus, responseContent
     function closeModal() {
         setIsOpen(false)
     }
-    function redirect() {
-        setTimeout(() => {
-            window.location.replace("http://www.w3schools.com");
-        })
-    }
+    
     return (
         <div>
             <Transition appear show={isOpen}>

@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import logo from '../assets/img/logo.png'
 import SignUpPopup from '../components/SignUpPopup';
+import { useAuth } from '../context/AuthContext';
 
 type Props = {}
 
 export default function SignUp({ }: Props) {
-
+  const { signupSubmit } = useAuth();
   const [response, setResponse] = useState(0);
   const [responseContent, setResponseContent] = useState("");
   const [showPopup, setPopup] = useState(false);
@@ -24,22 +25,12 @@ export default function SignUp({ }: Props) {
     var object: any = {};
     formData.forEach((value, key) => object[key] = value);
     var formDataJson = JSON.stringify(object);
-
     (async () => {
       setLoader(true);
-      fetch('http://localhost:8080/api/auth/signup', {
-        method: 'POST',
-        credentials: 'include',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: formDataJson
-      }).then(async function (data) {
-
-        const content = await data.json();
+      signupSubmit(formDataJson).then(async function (res) {
+        const content = await res.json();
         setResponseContent(content.message);
-        setResponse(data.status);
+        setResponse(res.status);
         setLoader(false)
         togglePopup();
       }).catch(
@@ -47,17 +38,10 @@ export default function SignUp({ }: Props) {
           setLoader(false)
         });
     })();
-
   }
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-700 via-green-600 to-white">
       <div className="pt-14 lg:pt-28">
-        {/* <div className="flex justify-center">
-          <a href='/' className='flex items-center gap-6 text-2xl font-bold text-white'>
-            <img className='w-16 h-16' src={logo} alt='' />
-            <div className='text-3xl'>Vita</div>
-          </a>
-        </div> */}
         <form id='signin' onSubmit={handleSubmit} className="bg-white shadow rounded lg:w-3/5 md:w-1/2 w-full p-10 mt-10 overflow-auto m-auto container">
           <div className='mx-auto w-2/3 md:w-1/2 mb-4'>
             <p className="text-2xl font-extrabold leading-6 text-gray-800 text-center">

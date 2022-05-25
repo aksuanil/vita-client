@@ -7,20 +7,18 @@ type Props = {}
 export default function Hero({ }: Props) {
     return (
         <>
-            <div className=" lg:px-6 xl:px-0  overflow-hidden font-Spectral font-semibold">
-                <div className="mx-auto relative z-0 px-4 md:px-12 xl:px-32">
-                    <div className="flex flex-col-reverse md:flex-row ">
-                        <div className="2xl:pl-36 min-pp md:w-full lg:w-3/5 md:pt-24 pb-10 lg:my-16 xl:my-40">
-                            <div className="text-3xl lg:text-6xl xl:text-8xl font-black text-gray-900 text-center md:text-left tracking-tighter f-f-i md:w-7/12 leading-tight text-heading-color whitespace-nowrap">Your Food,</div>
-                            <h1 className="text-3xl lg:text-6xl xl:text-8xl font-black text-gray-900 text-center md:text-left tracking-tighter f-f-i md:w-7/12 leading-tight text-heading-color whitespace-nowrap">Your Diet</h1>
-                            <h2 className="md:w-8/12 py-4 text-center md:text-left md:py-8 text-gray-700 text-lg lg:text-2xl">Do you want to make your own diet program designed unique to you? Vita is here for you!</h2>
-                            <div className="w-full flex justify-center md:block">
-                                <button className="hover:opacity-90 bg-green-600 py-3 px-10 lg:py-4 lg:px-20 rounded-2xl text-white text-sm md:text-lg f-f-p">Learn More</button>
-                            </div>
-                        </div>
-                        <div className="flex w-fit md:w-5/6 lg:w-3/6 justify-center items-center">
-                            <img className="md:pt-20 2xl:pt-40" src={CoffeeDoddle} alt="" />
-                        </div>
+            <div className='flex justify-center font-Spectral font-semibold overflow-hidden'>
+                <div className='flex flex-col md:flex-row container 2xl:max-w-7xl gap-4 md:gap-16 items-center'>
+                    <div className='flex flex-col justify-center  order-2 md:mt-24 md:order-1 md:w-1/2'>
+                        <div className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl whitespace-nowrap">Your Food,</div>
+                        <div className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl whitespace-nowrap">Your Diet</div>
+                        <div className="text-xl">Do you want to make your own diet program designed unique to you? Vita is here for you!</div>
+                        <button className="my-2 border-themeGreenDark border-2 p-2 px-8 w-fit bg-[#21754B] rounded-3xl hover:bg-themeGold text-themeGold hover:text-themeGreenDark transition-all duration-500">
+                            <button className="font-bold">Learn More</button>
+                        </button>
+                    </div>
+                    <div className='flex mt-24 sm:mt-24 lg:mt-28 xl:mt-32 order-1 justify-center 2xl:justify-end w-1/2'>
+                        <img className="w-full lg:w-5/6" src={CoffeeDoddle} alt="" />
                     </div>
                 </div>
             </div>
