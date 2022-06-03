@@ -3,11 +3,11 @@ import './assets/css/output.css';
 import HomePage from './pages/HomePage';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import SignUp from './pages/SignUp';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import NoPage from './pages/NoPage';
-import MainForm from './pages/MainForm';
 import { useAuth } from './context/AuthContext';
+import RegisterForm from './features/auth/components/RegisterForm';
+import DietFormWrapper from './features/dietlist/components/DietFormWrapper';
 
 export const LoginContext = React.createContext(false);
 
@@ -31,8 +31,8 @@ function App() {
             {/* absolute */}
             <Routes>
               <Route index element={<HomePage />} />
-              <Route path="signup" element={<SignUp />} />
-              <Route path="createlist" element={<MainForm />} />
+              <Route path="signup" element={<RegisterForm />} />
+              <Route path="createlist" element={<DietFormWrapper/>} />
               <Route path="*" element={<NoPage />} />
             </Routes>
             <Footer />

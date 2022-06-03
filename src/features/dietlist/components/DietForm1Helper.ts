@@ -1,23 +1,4 @@
-interface Inputs {
-    gender: string,
-    age: number,
-    height: number,
-    weight: number,
-    desiredCalorie: number,
-    desiredWeight: number
-    physicalActivity: number
-}
-
-interface BmiInputs {
-    height: number,
-    weight: number
-}
-
-interface DesiredWeightInputs {
-    desiredCalorie: number,
-    desiredWeight: number,
-    weight: number
-}
+import { Inputs, BmiInputs, DesiredWeightInputs } from "../types";
 
 const calcBmi = (bmiInputs: BmiInputs) => {
     const heightMeterSquare = (bmiInputs.height / 100) * (bmiInputs.height / 100)
@@ -45,5 +26,4 @@ const calcTargetWeightDays = (inputs: Inputs, targetWeightInputs: DesiredWeightI
     return targetDays
 }
 
-export type {Inputs, BmiInputs, DesiredWeightInputs}
 export {calcBmi, calcDailyCalNeed, calcTargetWeightDays}

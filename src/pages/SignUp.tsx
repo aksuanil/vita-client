@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import logo from '../assets/img/logo.png'
 import SignUpPopup from '../components/SignUpPopup';
 import { useAuth } from '../context/AuthContext';
-
+import { registerWithEmailAndPassword } from '../features/auth'
 type Props = {}
 
 export default function SignUp({ }: Props) {
@@ -12,32 +12,43 @@ export default function SignUp({ }: Props) {
   const [showPopup, setPopup] = useState(false);
   const [loader, setLoader] = useState(false);
 
-  const togglePopup = () => {
-    setPopup(true);
-    setTimeout(() => {
-      setPopup(false)
-    }, 500);
-  };
+  // const togglePopup = () => {
+  //   setPopup(true);
+  //   setTimeout(() => {
+  //     setPopup(false)
+  //   }, 500);
+  // };
 
   function handleSubmit(event: any) {
+    setLoader(true)
     event.preventDefault();
     const formData = new FormData(event.target);
     var object: any = {};
     formData.forEach((value, key) => object[key] = value);
-    var formDataJson = JSON.stringify(object);
-    (async () => {
-      setLoader(true);
-      signupSubmit(formDataJson).then(async function (res) {
-        const content = await res.json();
-        setResponseContent(content.message);
-        setResponse(res.status);
-        setLoader(false)
-        togglePopup();
-      }).catch(
-        function () {
-          setLoader(false)
-        });
-    })();
+    registerWithEmailAndPassword(object).then(async function (res) {
+      setResponseContent(res.data.message);
+      setResponse(res.status);
+      setLoader(false)
+      // togglePopup();
+    }).catch((err) => {
+      setResponseContent(err.response.data.message);
+      setLoader(false);
+      // togglePopup();
+    });
+
+    // (async () => {
+    //   setLoader(true);
+    //   signupSubmit(formDataJson).then(async function (res) {
+    //     const content = await res.json();
+    //     setResponseContent(content.message);
+    //     setResponse(res.status);
+    //     setLoader(false)
+    //     togglePopup();
+    //   }).catch(
+    //     function () {
+    //       setLoader(false)
+    //     });
+    // })();
   }
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-700 via-green-600 to-white">
