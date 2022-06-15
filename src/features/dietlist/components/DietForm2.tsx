@@ -1,5 +1,5 @@
 import React from 'react'
-import { DietList2 } from '../../../components/DietList';
+import { DietList2 } from '../../../components/DietListForm';
 
 type Props = {}
 

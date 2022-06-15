@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom';
-import { LoginContext } from '../App';
-import logo from '../assets/img/logo.png'
+import { LoginContext } from '../../App';
+import logo from '../../assets/img/logo.png'
 import LogIn from './LogIn';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 import { useEffect } from 'react';
 
 type Props = {

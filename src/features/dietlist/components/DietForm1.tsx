@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { calcBmi, calcDailyCalNeed, calcTargetWeightDays } from './DietForm1Helper'
 import type { Inputs, BmiInputs, DesiredWeightInputs } from '../types'
-import { DietList1 } from '../../../components/DietList';
+import { DietList1 } from '../../../components/DietListForm';
 
 type Props = {
     formData: any,
@@ -9,22 +9,6 @@ type Props = {
 }
 
 export default function DietForm1({ formData, setFormData }: Props) {
-
-    // const retrievedObject = JSON.parse(localStorage.getItem('inputs')!)
-
-    // useEffect(() => {
-    //     setInputs(retrievedObject)
-    // }, []);
-
-    // const [inputs, setInputs] = useState<Inputs>({
-    //     gender: "",
-    //     age: 0,
-    //     height: 0,
-    //     weight: 0,
-    //     desiredCalorie: 0,
-    //     desiredWeight: 0,
-    //     physicalActivity: 0
-    // });
     
     const [bmiInputs, setBmiInputs] = useState<BmiInputs>({
         height: 0,

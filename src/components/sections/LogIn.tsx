@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useState } from 'react'
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 
 type Props = {
     showPopup: boolean

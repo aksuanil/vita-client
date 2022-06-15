@@ -1,6 +1,6 @@
 import React from 'react'
 import img1 from '../assets/img/img5.png'
-import CoffeeDoddle from '../assets/img/CoffeeDoddle.png'
+import CoffeeDoddle from '../../assets/img/CoffeeDoddle.png'
 
 type Props = {}
 

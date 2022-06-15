@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import logo from '../assets/img/logo.png'
-import SignUpPopup from '../components/SignUpPopup';
+import SignUpPopup from '../components/sections/SignUpPopup';
 import { useAuth } from '../context/AuthContext';
 import { registerWithEmailAndPassword } from '../features/auth'
 type Props = {}

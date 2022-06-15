@@ -1,9 +1,9 @@
 import React from 'react'
-import Header from '../components/Header'
-import Hero from '../components/Hero'
-import About from '../components/About'
-import Footer from '../components/Footer'
-import Faq from '../components/Faq'
+import Header from '../components/sections/Header'
+import Hero from '../components/sections/Hero'
+import About from '../components/sections/About'
+import Footer from '../components/sections/Footer'
+import Faq from '../components/sections/Faq'
 
 export default function HomePage() {
   return (

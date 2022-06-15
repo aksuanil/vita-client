@@ -5,6 +5,8 @@ import DietFormResult from './DietFormResult'
 import { AiOutlineArrowRight, AiOutlineArrowLeft } from 'react-icons/ai'
 import { Inputs } from '../types'
 
+const pageArr = [1, 2]
+
 type Props = {
     // section: string;
 }
@@ -87,13 +89,22 @@ export default function DietFormWrapper({ }: Props) {
                     </button>
                 }
                 <div className=' border-r-2 border-gray-300'></div>
-                {section !== 3 &&
+                {section !== (pageArr.length) &&
                     <button type="submit" form={`${section}`} onClick={() => increaseSection(section)} className="relative px-5 py-2 font-medium text-white group w-fit">
                         <span className="absolute inset-0 w-full h-full transition-all duration-300 ease-out transform translate-x-0 -skew-x-12 bg-themeGreenLight group-hover:bg-themeGreenDark group-hover:skew-x-12"></span>
                         <span className="absolute inset-0 w-full h-full transition-all duration-300 ease-out transform skew-x-12 bg-themeGreenDark group-hover:bg-themeGreenLight group-hover:-skew-x-12"></span>
                         <span className="absolute bottom-0 left-0 hidden w-10 h-20 transition-all duration-100 ease-out transform -translate-x-8 translate-y-10 bg-themeGreenDark -rotate-12"></span>
                         <span className="absolute bottom-0 right-0 hidden w-10 h-20 transition-all duration-100 ease-out transform translate-x-10 translate-y-8 bg-themeGreenLight -rotate-12"></span>
                         <span className="relative flex gap-2">Next<AiOutlineArrowRight size={24} /> </span>
+                    </button>
+                }
+                {section === (pageArr.length) &&
+                    <button type="submit" form={`${section}`} onClick={() => increaseSection(section)} className="relative px-5 py-2 font-medium text-white group w-fit">
+                        <span className="absolute inset-0 w-full h-full transition-all duration-300 ease-out transform translate-x-0 -skew-x-12 bg-themeGreenLight group-hover:bg-themeGreenDark group-hover:skew-x-12"></span>
+                        <span className="absolute inset-0 w-full h-full transition-all duration-300 ease-out transform skew-x-12 bg-themeGreenDark group-hover:bg-themeGreenLight group-hover:-skew-x-12"></span>
+                        <span className="absolute bottom-0 left-0 hidden w-10 h-20 transition-all duration-100 ease-out transform -translate-x-8 translate-y-10 bg-themeGreenDark -rotate-12"></span>
+                        <span className="absolute bottom-0 right-0 hidden w-10 h-20 transition-all duration-100 ease-out transform translate-x-10 translate-y-8 bg-themeGreenLight -rotate-12"></span>
+                        <span className="relative flex gap-2">Submit<AiOutlineArrowRight size={24} /> </span>
                     </button>
                 }
             </div>
