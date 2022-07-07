@@ -6,17 +6,17 @@ import Footer from './components/sections/Footer';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import NoPage from './pages/NoPage';
 import { useAuth } from './context/AuthContext';
-import RegisterForm from './features/auth/components/RegisterForm';
+import RegisterForm from './components/RegisterForm/RegisterForm';
 import DietFormWrapper from './features/dietlist/components/DietFormWrapper';
 
 export const LoginContext = React.createContext(false);
 
 function App() {
 
-  const { loginSubmit, logout, checkLoginStatus } = useAuth();
+  const { checkLoginStatus } = useAuth();
 
   const isLogin = checkLoginStatus();
-
+  console.log(isLogin);
   return (
     <>
       <body className="debug-screens"/>
@@ -32,6 +32,7 @@ function App() {
             <Routes>
               <Route index element={<HomePage />} />
               <Route path="signup" element={<RegisterForm />} />
+              <Route path="admin" element={<RegisterForm />} />
               <Route path="createlist" element={<DietFormWrapper/>} />
               <Route path="*" element={<NoPage />} />
             </Routes>

@@ -1,3 +1,3 @@
-export * from './DietList1';
-export * from './DietList2';
-export * from './DietResult';
+export * from './DietFormPage1';
+export * from './DietFormPage2';
+export * from './DietFormResults';

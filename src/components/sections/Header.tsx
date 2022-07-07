@@ -41,21 +41,27 @@ export default function Header({ isUserLogin }: Props) {
     }
     return (
         <>
-            <div className=" mx-auto z-40 sticky top-0">
+            <div className=" mx-auto z-40 sticky top-0 font-Spectral font-bold">
                 <nav className="w-full px-14 absolute bg-opacity-90 shadow-md shadow-gray-500 backdrop-blur-sm bg-[#096637] ">
                     <div id='header' className="hidden lg:h-[5.5rem] transition-all duration-500 lg:flex w-full justify-between items-center py-5 relative ">
-                        <NavLink to="/" className="flex w-2/6 xl:w-2/5 items-center gap-6 text-[32px] font-bold text-white font-Spectral">
-                            <img className='w-12 h-12' src={logo} />
-                            <div>Vita</div>
-                        </NavLink>
-                        <div className="flex justify-evenly md:w-4/6 lg:w-full xl:w-full 2xl:w-4/6 font-Spectral font-bold">
-                            <div className="flex justify-between w-full items-center text-themeGold tracking-widest text-sm xl:text-[17px]">
-                                <NavLink to="/" className={({ isActive }) =>
+                        <div className='flex gap-8 items-center'>
+                            <NavLink to="/" className="flex items-center gap-6 text-[32px] font-bold text-white font-Spectral">
+                                <img className='w-12 h-12' src={logo} />
+                                <div>Vita</div>
+                            </NavLink>
+                            <div className='flex items-center text-themeGold tracking-widest text-sm xl:text-[17px]'>
+                                <NavLink to="admin" className={({ isActive }) =>
                                     "" + (isActive ? " border-b-[3px] border-themeGoldLight pb-1" : "relative group pb-1")
-                                } >Home
+                                } >Admin Panel
                                     <span className="absolute -bottom-1 left-1/2 w-0 h-[3px] duration-200 group-hover:duration-200 bg-themeGoldLight group-hover:w-1/2 group-hover:transition-all"></span>
                                     <span className="absolute -bottom-1 right-1/2 w-0 h-[3px] duration-200 group-hover:duration-200 bg-themeGoldLight group-hover:w-1/2 group-hover:transition-all"></span>
                                 </NavLink>
+                            </div>
+
+                        </div>
+
+                        <div className="flex justify-evenly md:w-4/6 lg:w-full xl:w-full 2xl:w-4/6 ">
+                            <div className="flex justify-between w-full items-center text-themeGold tracking-widest text-sm xl:text-[17px]">
                                 <NavLink to="/createlist" className={({ isActive }) =>
                                     "" + (isActive ? " border-b-[3px] border-themeGoldLight pb-1" : "relative group pb-1")
                                 } ><div className='whitespace-nowrap'>Create List</div>

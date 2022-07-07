@@ -1,12 +1,11 @@
 import { devNull } from 'os';
 import React, { useState } from 'react'
-import Notification from '../../../components/Elements/Notification/Notification';
-import Form from '../../../components/Form/Form';
+import Notification from '../Elements/Notification/Notification';
+import Form from '../Form/Form';
 // import SignUpPopup from '../components/SignUpPopup';
 // import { useAuth } from '../context/AuthContext';
-import { registerWithEmailAndPassword } from '../index'
-import { RegisterCredentials } from '../types'
-
+import { RegisterCredentials } from '../../service/auth/types'
+import { registerWithEmailAndPassword } from '../../service/auth/auth';
 type Props = {}
 
 export default function RegisterForm({ }: Props) {

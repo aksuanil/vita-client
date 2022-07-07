@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Popover } from '@headlessui/react'
 import { IoMdInformationCircle } from 'react-icons/io'
-import { AiOutlineArrowRight } from 'react-icons/ai'
-import { SelectField } from './SelectField'
-import { InputField } from './InputField'
+import { SelectField } from '../Elements/SelectField/SelectField'
+import { InputField } from '../Elements/InputField/InputField'
 
 type Props = {
     handleChange: (event: any) => void,
@@ -13,7 +12,7 @@ type Props = {
     targetWeightResult: any //TODO
 }
 
-function DietList1({ handleChange, inputs, bmiResult, targetWeightResult, handleNext }: Props) {
+function DietFormPage1({ handleChange, inputs, bmiResult, targetWeightResult, handleNext }: Props) {
     return (
         <>
             <div className="flex items-center justify-center" >
@@ -112,4 +111,4 @@ function DietList1({ handleChange, inputs, bmiResult, targetWeightResult, handle
         </>)
 }
 
-export { DietList1 }
+export { DietFormPage1 }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { calcBmi, calcDailyCalNeed, calcTargetWeightDays } from './DietForm1Helper'
 import type { Inputs, BmiInputs, DesiredWeightInputs } from '../types'
-import { DietList1 } from '../../../components/DietListForm';
+import { DietFormPage1 } from '../../../components/DietListForm';
 
 type Props = {
     formData: any,
@@ -53,6 +53,6 @@ export default function DietForm1({ formData, setFormData }: Props) {
         }
     }
     return (
-        <DietList1 handleChange={handleChange} inputs={formData} bmiResult={bmiResult} targetWeightResult={targetWeightResult} handleNext={handleNext} />
+        <DietFormPage1 handleChange={handleChange} inputs={formData} bmiResult={bmiResult} targetWeightResult={targetWeightResult} handleNext={handleNext} />
     )
 }

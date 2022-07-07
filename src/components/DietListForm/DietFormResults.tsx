@@ -2,7 +2,7 @@ import React from 'react'
 
 type Props = {}
 
-export default function DietResult({ }: Props) {
+export default function DietFormResults({ }: Props) {
     return (
         <>
             <div>DietResult</div>
@@ -17,4 +17,4 @@ export default function DietResult({ }: Props) {
     )
 }
 
-export { DietResult }
+export { DietFormResults }

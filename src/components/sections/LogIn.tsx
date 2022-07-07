@@ -8,7 +8,14 @@ type Props = {
 }
 
 export default function LogIn({ showPopup }: Props) {
-    const { loginSubmit, logout, checkLoginStatus } = useAuth();
+    function handleSubmit (event: any) {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        let object: any = {};
+        formData.forEach((value, key) => object[key] = value);
+        loginWithEmailAndPassword(object);
+    }
+    const { loginWithEmailAndPassword } = useAuth();
 
     let [isOpen, setIsOpen] = useState(false)
     const [showpass, setShowPass] = useState(false)
@@ -53,7 +60,7 @@ export default function LogIn({ showPopup }: Props) {
                                 leaveTo="opacity-0 scale-95"
                             >
                                 <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                                    <form onSubmit={loginSubmit} className="lg:px-10 sm:px-6 px-2">
+                                    <form onSubmit={handleSubmit} className="lg:px-10 sm:px-6 px-2">
                                         <p tabIndex={0} className="focus:outline-none text-2xl font-extrabold leading-6 text-gray-800">
                                             Login to your account
                                         </p>

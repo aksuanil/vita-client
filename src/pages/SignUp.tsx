@@ -2,11 +2,10 @@ import React, { useState } from 'react'
 import logo from '../assets/img/logo.png'
 import SignUpPopup from '../components/sections/SignUpPopup';
 import { useAuth } from '../context/AuthContext';
-import { registerWithEmailAndPassword } from '../features/auth'
 type Props = {}
 
 export default function SignUp({ }: Props) {
-  const { signupSubmit } = useAuth();
+  const { registerWithEmailAndPassword } = useAuth();
   const [response, setResponse] = useState(0);
   const [responseContent, setResponseContent] = useState("");
   const [showPopup, setPopup] = useState(false);
@@ -20,17 +19,19 @@ export default function SignUp({ }: Props) {
   // };
 
   function handleSubmit(event: any) {
+    debugger;
+
     setLoader(true)
     event.preventDefault();
     const formData = new FormData(event.target);
     var object: any = {};
     formData.forEach((value, key) => object[key] = value);
-    registerWithEmailAndPassword(object).then(async function (res) {
+    registerWithEmailAndPassword(object).then(async function (res: any) {
       setResponseContent(res.data.message);
       setResponse(res.status);
       setLoader(false)
       // togglePopup();
-    }).catch((err) => {
+    }).catch((err: any) => {
       setResponseContent(err.response.data.message);
       setLoader(false);
       // togglePopup();
