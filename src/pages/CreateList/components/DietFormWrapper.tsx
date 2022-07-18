@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import DietList1 from './DietForm1'
+import DietForm1 from './DietForm1'
 import DietForm2 from './DietForm2'
 import DietFormResult from './DietFormResult'
 import { AiOutlineArrowRight, AiOutlineArrowLeft } from 'react-icons/ai'
@@ -35,7 +35,7 @@ export default function DietFormWrapper({ }: Props) {
 
     const PageDisplay = () => {
         if (section === 1) {
-            return <DietList1 formData={inputs} setFormData={setInputs} />;
+            return <DietForm1 formData={inputs} setFormData={setInputs} />;
         } else if (section === 2) {
             return <DietForm2 />;
         } else {

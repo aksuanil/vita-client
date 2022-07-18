@@ -1,11 +1,44 @@
-import React from 'react'
-import Notification from '../Elements/Notification/Notification'
+import React, { useState } from 'react'
+import Notification from '../../../components/Elements/Notification/Notification';
 
-type FormProps = {
-    handleSubmit: (event: any) => void
-}
+import { registerWithEmailAndPassword } from '../../../service/auth/auth';
+type Props = {}
 
-function Form({ handleSubmit }: FormProps) {
+export default function RegisterForm({ }: Props) {
+    // const { signupSubmit } = useAuth();
+    const [loader, setLoader] = useState(false);
+    const [open, setOpen] = useState(false);
+    const [header, setHeader] = useState("");
+    const [text, setText] = useState("");
+    const [status, setStatus] = useState(0);
+    const [barWidth, setBarWidth] = useState(0);
+
+    const onPopupOpen = () => {
+        setOpen(true);
+    };
+    const onPopupClose = () => {
+        setOpen(false);
+    };
+
+    function handleSubmit(event: any) {
+        onPopupOpen();
+        setLoader(true);
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        let object: any = {};
+        formData.forEach((value, key) => object[key] = value);
+        registerWithEmailAndPassword(object).then((response) => {
+            setLoader(false);
+            setHeader(response.data);
+            setText(response.data.message);
+            setStatus(response.status);
+        }).catch((err) => {
+            setLoader(false);
+            setHeader(err.response.data.message);
+            setText(err.response.data.message);
+            setStatus(err.status);
+        });
+    }
     return (
         <div className="min-h-screen bg-gradient-to-b from-green-700 via-green-600 to-white">
             <div className="pt-14 lg:pt-28">
@@ -99,8 +132,9 @@ function Form({ handleSubmit }: FormProps) {
                             </button>
                         </div>
                     </div>
-                    {/* {<Notification isOpen={showPopup} headerValue={response} textValue={responseContent} isLoading={true} onClose= {()=>{}}/>} */}
+                    {<Notification isOpen={open} isLoading={loader} headerValue={header} textValue={text} onClose={onPopupClose} />}
                 </form>
             </div>
-        </div>)
+        </div>
+    );
 }

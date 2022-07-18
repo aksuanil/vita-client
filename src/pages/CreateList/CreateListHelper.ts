@@ -1,4 +1,4 @@
-import { Inputs, BmiInputs, DesiredWeightInputs } from "../types";
+import { Inputs, BmiInputs, DesiredWeightInputs } from "./types";
 
 const calcBmi = (bmiInputs: BmiInputs) => {
     const heightMeterSquare = (bmiInputs.height / 100) * (bmiInputs.height / 100)

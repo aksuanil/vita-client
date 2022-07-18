@@ -6,18 +6,19 @@ const getUser = (data: RegisterCredentials) => {
 };
 
 const loginWithEmailAndPassword = (data?: LoginCredentials) => {
-    debugger
-    return axiosRequest.post('/auth/signin', data);
+    return axiosRequest.post('/auth/signin', data, {
+        withCredentials: true
+    });
 };
 
 const registerWithEmailAndPassword = (data?: RegisterCredentials) => {
-    debugger;
     return axiosRequest.post('/auth/signup', data);
 };
 
 const checkLoginStatus = async () => {
-    debugger
-    const response = await axiosRequest.get('/auth/isLogin');
+    const response = await axiosRequest.get('/auth/isLogin', {
+        withCredentials: true
+    });
     if (response.status === 200) {
         return true;
     }
@@ -27,7 +28,9 @@ const checkLoginStatus = async () => {
 };
 
 const logout = async () => {
-    const response = await axiosRequest.get('/api/auth/signout');
+    const response = await axiosRequest.post('/auth/signout', {}, {
+        withCredentials: true
+    });
     if (response.status === 200) {
         window.location.reload();
     }

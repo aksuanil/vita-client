@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Popover } from '@headlessui/react'
 import { IoMdInformationCircle } from 'react-icons/io'
-import { SelectField } from '../Elements/SelectField/SelectField'
-import { InputField } from '../Elements/InputField/InputField'
+import { SelectField } from '../../../../components/Elements/SelectField/SelectField'
+import { InputField } from '../../../../components/Elements/InputField/InputField'
 
 type Props = {
     handleChange: (event: any) => void,
@@ -111,4 +111,4 @@ function DietFormPage1({ handleChange, inputs, bmiResult, targetWeightResult, ha
         </>)
 }
 
-export { DietFormPage1 }
+// export { DietFormPage1 }

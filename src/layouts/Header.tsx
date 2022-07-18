@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom';
-import { LoginContext } from '../../App';
-import logo from '../../assets/img/logo.png'
-import LogIn from './LogIn';
-import { useAuth } from '../../context/AuthContext';
+import logo from '../assets/img/logo.png'
+import LogIn from '../pages/Login/LogIn';
 import { useEffect } from 'react';
+import { useAuth } from '../context/AuthContext';
 
 type Props = {
     isUserLogin: Promise<boolean>

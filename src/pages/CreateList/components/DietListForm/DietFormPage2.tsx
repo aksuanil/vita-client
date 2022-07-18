@@ -1,6 +1,6 @@
 import React from 'react'
-import { CheckboxField } from '../Elements/CheckboxField/CheckboxField'
-import { SelectField } from '../Elements/SelectField/SelectField'
+import { CheckboxField } from '../../../../components/Elements/CheckboxField/CheckboxField'
+import { SelectField } from '../../../../components/Elements/SelectField/SelectField'
 
 type Props = {
     handleChange?: (event: any) => void,
@@ -31,4 +31,4 @@ export default function DietFormPage2({ handleChange }: Props) {
     )
 }
 
-export { DietFormPage2 }
+// export { DietFormPage2 }

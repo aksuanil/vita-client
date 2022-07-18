@@ -1,8 +1,4 @@
-import React from 'react'
-
-type Props = {}
-
-export default function NoPage({ }: Props) {
+export default function NoPage() {
   return (
     <div className="lg:px-24 lg:py-24 h-screen md:py-20 md:px-44 px-4 py-24 items-center flex justify-center flex-col-reverse lg:flex-row md:gap-28 gap-16 bg-[#61B15A]">
       <div className="xl:pt-24 w-full xl:w-1/2 relative pb-12 lg:pb-0 ">
@@ -18,12 +14,12 @@ export default function NoPage({ }: Props) {
             </div>
           </div>
           <div>
-            <img src="https://i.ibb.co/G9DC8S0/404-2.png" />
+            <img src="https://i.ibb.co/G9DC8S0/404-2.png" alt='group'/>
           </div>
         </div>
       </div>
       <div>
-        <img src="https://i.ibb.co/ck1SGFJ/Group.png" />
+        <img src="https://i.ibb.co/ck1SGFJ/Group.png" alt='group' />
       </div>
     </div>
   )

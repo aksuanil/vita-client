@@ -26,14 +26,7 @@ export const AuthContext = React.createContext<IAuthProvider>({
 })
 
 const AuthProvider = ({ children }: any) => {
-
-    loginWithEmailAndPassword();
-    registerWithEmailAndPassword();
-    logout();
-    checkLoginStatus();
-
     const data: IAuthProvider = { registerWithEmailAndPassword, loginWithEmailAndPassword, logout, checkLoginStatus };
-
     return (
         <AuthContext.Provider value={data}>{children}</AuthContext.Provider>
     )

@@ -1,22 +1,20 @@
-import React, { useState } from 'react';
 import './assets/css/output.css';
-import HomePage from './pages/HomePage';
-import Header from './components/sections/Header';
-import Footer from './components/sections/Footer';
+import HomePage from './pages/Home/HomePage';
+import Footer from './layouts/Footer';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import NoPage from './pages/NoPage';
+import NoPage from './pages/NoPage/NoPage';
 import { useAuth } from './context/AuthContext';
-import RegisterForm from './components/RegisterForm/RegisterForm';
-import DietFormWrapper from './features/dietlist/components/DietFormWrapper';
+import RegisterForm from './pages/Register/components/RegisterForm';
+import DietFormWrapper from './pages/CreateList/components/DietFormWrapper';
+import Header from './layouts/Header';
+import AdminPage from './pages/Admin/AdminPage';
 
-export const LoginContext = React.createContext(false);
+// export const LoginContext = React.createContext(false);
 
 function App() {
-
   const { checkLoginStatus } = useAuth();
-
   const isLogin = checkLoginStatus();
-  console.log(isLogin);
+
   return (
     <>
       <body className="debug-screens"/>
@@ -32,7 +30,7 @@ function App() {
             <Routes>
               <Route index element={<HomePage />} />
               <Route path="signup" element={<RegisterForm />} />
-              <Route path="admin" element={<RegisterForm />} />
+              <Route path="admin" element={<AdminPage />} />
               <Route path="createlist" element={<DietFormWrapper/>} />
               <Route path="*" element={<NoPage />} />
             </Routes>
