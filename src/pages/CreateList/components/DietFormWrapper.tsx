@@ -4,6 +4,9 @@ import DietForm2 from './DietForm2'
 import DietFormResult from './DietFormResult'
 import { AiOutlineArrowRight, AiOutlineArrowLeft } from 'react-icons/ai'
 import { Inputs } from '../types'
+import { Step, StepConnector, stepConnectorClasses, StepIconProps, StepLabel, Stepper, styled } from '@mui/material'
+import { Check } from '@mui/icons-material'
+import Steps from '../../../components/Elements/Stepper/Steps'
 
 const pageArr = [1, 2]
 
@@ -12,7 +15,8 @@ type Props = {
 }
 
 export default function DietFormWrapper({ }: Props) {
-    // const [page, setPage] = useState(0);
+    const [activeStep, setActiveStep] = React.useState(0);
+    const [skipped, setSkipped] = React.useState(new Set<number>());
     const [inputs, setInputs] = useState<Inputs>({
         gender: "",
         age: 0,
@@ -53,58 +57,82 @@ export default function DietFormWrapper({ }: Props) {
         setSection(val - 1);
     }
 
+    const isStepOptional = (step: number) => {
+        return step === 1;
+    };
+
+    const isStepSkipped = (step: number) => {
+        return skipped.has(step);
+    };
+
+    const handleNext = () => {
+        let newSkipped = skipped;
+        if (isStepSkipped(activeStep)) {
+            newSkipped = new Set(newSkipped.values());
+            newSkipped.delete(activeStep);
+        }
+
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        setSkipped(newSkipped);
+    };
+
+    const handleBack = () => {
+        setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    };    
+    
+    const handleSubmit = () => {
+        console.log("submit")
+    };
+
+    const handleSkip = () => {
+        if (!isStepOptional(activeStep)) {
+            // You probably want to guard against something like this,
+            // it should never occur unless someone's actively trying to break something.
+            throw new Error("You can't skip a step that isn't optional.");
+        }
+
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        setSkipped((prevSkipped) => {
+            const newSkipped = new Set(prevSkipped.values());
+            newSkipped.add(activeStep);
+            return newSkipped;
+        });
+    };
+
+    const handleReset = () => {
+        setActiveStep(0);
+    };
+
+    const steps = ['Basic Information', 'Food Preferences', 'Food Preferences', 'Your Diet List'];
+
     return (
-        <div className='min-h-screen pt-14 lg:pt-24'>
-            <div className="bg-gray-100 py-6 flex flex-wrap items-center justify-center gap-4 ">
-                <button onClick={() => setSection(1)} className={`transition text-left w-52 h-16 relative md:mt-0 mt-4 rounded-l-sm rounded-r-3xl border-themeGreenLight ${section === 1 ? "bg-themeGreenLight hover:bg-[#3f8f36] text-white" : "bg-white hover:bg-[#49d13d48] "}`}>
-                    <div className="absolute w-full flex flex-col px-6 items-center justify-center inset-0 m-0">
-                        <p className="w-full text-sm font-medium leading-4">Basic Information</p>
-                        <p className="w-full text-xs mt-1 leading-none ">Basic informations</p>
-                    </div>
-                </button>
-                <button onClick={() => setSection(2)} className={`transition text-left w-52 h-16 relative md:mt-0 mt-4 border-2 rounded-l-sm rounded-r-3xl border-themeGreenLight ${section === 2 ? "bg-themeGreenLight hover:bg-[#3f8f36] text-white" : "bg-white hover:bg-[#49d13d48] "}`}>
-                    <div className="absolute w-full flex flex-col px-6 items-center justify-center inset-0 m-0">
-                        <p className="w-full text-sm font-medium leading-4 ">Food Preferences</p>
-                        <p className="w-full text-xs mt-1 leading-none">Your specific food preferences</p>
-                    </div>
-                </button>
-                <button onClick={() => setSection(3)} className={`transition text-left w-52 h-16 relative lg:mt-0 mt-4  border-2 rounded-l-sm rounded-r-3xl border-themeGreenLight ${section === 3 ? "bg-themeGreenLight hover:bg-[#3f8f36] text-white" : "bg-white hover:bg-[#49d13d48] "}`}>
-                    <div className="absolute w-full flex flex-col px-6 items-center justify-center inset-0 m-0">
-                        <p className="w-full text-sm font-medium leading-4">Your Diet List</p>
-                        <p className="w-full text-xs mt-1 leading-none">Resources to begin</p>
-                    </div>
-                </button>
-            </div>
+        <div className='min-h-screen pt-14 lg:pt-32'>
+            <Steps steps={steps} activeStep={activeStep} isStepSkipped={isStepSkipped} isStepOptional={isStepOptional} ></Steps>
 
             {PageDisplay()}
 
             <div className='flex justify-center gap-8'>
-                {section !== 1 &&
-                    <button onClick={() => descreaseSection(section)} className="relative px-5 py-2 font-medium text-white group w-fit">
-                        <span className="absolute inset-0 w-full h-full transition-all duration-300 ease-out transform translate-x-0 -skew-x-12 bg-themeGreenLight group-hover:bg-themeGreenDark group-hover:skew-x-12"></span>
-                        <span className="absolute inset-0 w-full h-full transition-all duration-300 ease-out transform skew-x-12 bg-themeGreenDark group-hover:bg-themeGreenLight group-hover:-skew-x-12"></span>
-                        <span className="absolute bottom-0 left-0 hidden w-10 h-20 transition-all duration-100 ease-out transform -translate-x-8 translate-y-10 bg-themeGreenDark -rotate-12"></span>
-                        <span className="absolute bottom-0 right-0 hidden w-10 h-20 transition-all duration-100 ease-out transform translate-x-10 translate-y-8 bg-themeGreenLight -rotate-12"></span>
-                        <span className="relative flex gap-2"><AiOutlineArrowLeft size={24} /> Back </span>
-                    </button>
-                }
+                <button disabled={activeStep === 0} onClick={handleBack} className="bg-white text-gray-800 font-bold rounded border-b-2 border-green-500 disabled:bg-white disabled:text-gray-400 disabled:border-green-300 hover:border-green-600 hover:bg-green-500 hover:text-white shadow-md py-2 px-6 inline-flex items-center">
+                    <svg transform="scale(-1,1)" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <path fill="currentcolor" d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
+                    </svg>
+                    <span className="ml-2">Back</span>
+                </button>
                 <div className=' border-r-2 border-gray-300'></div>
-                {section !== (pageArr.length) &&
-                    <button type="submit" form={`${section}`} onClick={() => increaseSection(section)} className="relative px-5 py-2 font-medium text-white group w-fit">
-                        <span className="absolute inset-0 w-full h-full transition-all duration-300 ease-out transform translate-x-0 -skew-x-12 bg-themeGreenLight group-hover:bg-themeGreenDark group-hover:skew-x-12"></span>
-                        <span className="absolute inset-0 w-full h-full transition-all duration-300 ease-out transform skew-x-12 bg-themeGreenDark group-hover:bg-themeGreenLight group-hover:-skew-x-12"></span>
-                        <span className="absolute bottom-0 left-0 hidden w-10 h-20 transition-all duration-100 ease-out transform -translate-x-8 translate-y-10 bg-themeGreenDark -rotate-12"></span>
-                        <span className="absolute bottom-0 right-0 hidden w-10 h-20 transition-all duration-100 ease-out transform translate-x-10 translate-y-8 bg-themeGreenLight -rotate-12"></span>
-                        <span className="relative flex gap-2">Next<AiOutlineArrowRight size={24} /> </span>
+                {activeStep !== steps.length - 1 &&
+                    <button type="submit" form={`${section}`} onClick={handleNext} className="bg-white text-gray-800 font-bold rounded border-b-2 border-green-500 hover:border-green-600 hover:bg-green-500 hover:text-white shadow-md py-2 px-6 inline-flex items-center">
+                        <span className="mr-2">Next</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <path fill="currentcolor" d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
+                        </svg>
                     </button>
                 }
-                {section === (pageArr.length) &&
-                    <button type="submit" form={`${section}`} onClick={() => increaseSection(section)} className="relative px-5 py-2 font-medium text-white group w-fit">
-                        <span className="absolute inset-0 w-full h-full transition-all duration-300 ease-out transform translate-x-0 -skew-x-12 bg-themeGreenLight group-hover:bg-themeGreenDark group-hover:skew-x-12"></span>
-                        <span className="absolute inset-0 w-full h-full transition-all duration-300 ease-out transform skew-x-12 bg-themeGreenDark group-hover:bg-themeGreenLight group-hover:-skew-x-12"></span>
-                        <span className="absolute bottom-0 left-0 hidden w-10 h-20 transition-all duration-100 ease-out transform -translate-x-8 translate-y-10 bg-themeGreenDark -rotate-12"></span>
-                        <span className="absolute bottom-0 right-0 hidden w-10 h-20 transition-all duration-100 ease-out transform translate-x-10 translate-y-8 bg-themeGreenLight -rotate-12"></span>
-                        <span className="relative flex gap-2">Submit<AiOutlineArrowRight size={24} /> </span>
+                {activeStep === steps.length - 1 &&
+                    <button type="submit" form={`${section}`} onClick={handleSubmit} className="bg-white text-gray-800 font-bold rounded border-b-2 border-green-500 hover:border-green-600 hover:bg-green-500 hover:text-white shadow-md py-2 px-6 inline-flex items-center">
+                        <span className="mr-2">Submit</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <path fill="currentcolor" d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
+                        </svg>
                     </button>
                 }
             </div>
